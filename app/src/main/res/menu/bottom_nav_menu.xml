@@ -2,13 +2,13 @@
     <item
         android:id="@+id/homeFragment"
         android:title="Home"
-        android:icon="@drawable/ic_home"/>
+        android:icon="@drawable/ic_launcher_foreground"/>
     <item
         android:id="@+id/manageFragment"
         android:title="Manage"
-        android:icon="@drawable/ic_manage"/>
+        android:icon="@drawable/ic_launcher_foreground"/>
     <item
         android:id="@+id/aboutFragment"
         android:title="About"
-        android:icon="@drawable/ic_about"/>
+        android:icon="@drawable/ic_launcher_foreground"/>
 </menu>
