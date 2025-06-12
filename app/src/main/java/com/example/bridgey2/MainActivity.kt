@@ -9,7 +9,7 @@ import androidx.navigation.ui.NavigationUI
 import com.example.bridgey2.Fragments.HomeFragment
 //import com.example.bridgey2.Fragments.PostFragment
 //import com.example.bridgey2.Fragments.StatusFragment
-//import com.example.bridgey2.Fragments.SearchFragment
+import com.example.bridgey2.Fragments.SearchFragment
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView

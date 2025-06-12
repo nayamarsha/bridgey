@@ -13,15 +13,15 @@
         android:name="com.example.bridgey2.Fragments.ScheduleFragment"
         tools:layout="@layout/fragment_schedule" />
     <fragment
-        android:id="@+id/aboutFragment"
+        android:id="@+id/postFragment"
         android:name="com.example.bridgey2.Fragments.PostFragment"
         tools:layout="@layout/fragment_post" />
     <fragment
-        android:id="@+id/searchFragment2"
+        android:id="@+id/searchFragment"
         android:name="com.example.bridgey2.Fragments.SearchFragment"
         android:label="SearchFragment" />
     <fragment
-        android:id="@+id/statusFragment2"
+        android:id="@+id/statusFragment"
         android:name="com.example.bridgey2.Fragments.StatusFragment"
         android:label="StatusFragment" />
 </navigation>
