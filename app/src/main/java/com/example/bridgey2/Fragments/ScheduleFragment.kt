@@ -6,34 +6,58 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager2.widget.ViewPager2
+import com.example.bridgey2.Adapters.TabPagerAdapter
 import com.example.bridgey2.R
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 class ScheduleFragment : Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    private lateinit var adapter: TabPagerAdapter
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_schedule, container, false)
     }
 
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        val viewPager = view.findViewById<ViewPager2>(R.id.viewPager)
-//        val tabLayout = view.findViewById<TabLayout>(R.id.tabLayout)
-//
-////        val adapter = TabPagerAdapter // pakai this, bukan requireActivity()
-////        viewPager.adapter = adapter
-////
-////        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-////            tab.text = when (position) {
-////                0 -> "Event"
-////                1 -> "Sponsor"
-////                2 -> "Tent"
-////                else -> ""
-////            }
-////        }.attach()
-//    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val viewPager = view.findViewById<ViewPager2>(R.id.viewPager)
+        val tabLayout = view.findViewById<TabLayout>(R.id.tabLayout)
+
+        adapter = TabPagerAdapter(childFragmentManager, lifecycle)
+
+        tabLayout.addTab(tabLayout.newTab().setText("Event"))
+        tabLayout.addTab(tabLayout.newTab().setText("Sponsor"))
+        tabLayout.addTab(tabLayout.newTab().setText("Tent"))
+
+        viewPager.adapter = adapter
+
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                if(tab != null) {
+                    viewPager.currentItem = tab.position
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+
+            }
+
+        })
+
+        viewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                tabLayout.selectTab(tabLayout.getTabAt(position))
+            }
+        })
+    }
 }

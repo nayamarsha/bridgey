@@ -20,7 +20,7 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/logo"
+                android:id="@+id/si_logo"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="8dp"
@@ -31,46 +31,46 @@
                 app:shapeAppearanceOverlay="@style/roundedImageView" />
 
             <TextView
-                android:id="@+id/tvHeader"
+                android:id="@+id/si_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:text="Header"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@id/logo"
-                app:layout_constraintTop_toTopOf="@id/logo" />
+                app:layout_constraintStart_toEndOf="@id/si_logo"
+                app:layout_constraintTop_toTopOf="@id/si_logo" />
 
             <TextView
-                android:id="@+id/tvSubheader"
+                android:id="@+id/Si_Subheader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
                 android:text="Subheader"
-                app:layout_constraintStart_toEndOf="@id/logo"
-                app:layout_constraintTop_toBottomOf="@id/tvHeader" />
+                app:layout_constraintStart_toEndOf="@id/si_logo"
+                app:layout_constraintTop_toBottomOf="@id/si_header" />
 
             <ImageButton
-                android:id="@+id/btnMenu"
+                android:id="@+id/si_btnMenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:src="@drawable/baseline_dehaze_24"
-                app:layout_constraintBottom_toBottomOf="@id/logo"
+                app:layout_constraintBottom_toBottomOf="@id/si_logo"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/logo"
+                app:layout_constraintTop_toTopOf="@id/si_logo"
                 tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/si_imageView"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:layout_marginTop="8dp"
                 android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/logo"
+                app:layout_constraintTop_toBottomOf="@id/si_logo"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
@@ -84,7 +84,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imageView" />
+                app:layout_constraintTop_toBottomOf="@id/si_imageView" />
 
             <TextView
                 android:id="@+id/item_scedule_subtitle"
