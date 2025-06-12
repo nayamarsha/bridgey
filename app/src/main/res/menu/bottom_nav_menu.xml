@@ -2,21 +2,21 @@
     <item
         android:id="@+id/homeFragment"
         android:title="Home"
-        android:icon="@drawable/ic_launcher_foreground"/>
+        android:icon="@drawable/ic_home_selector"/>
     <item
         android:id="@+id/scheduleFragment"
         android:title="Schedule"
-        android:icon="@drawable/ic_launcher_foreground"/>
+        android:icon="@drawable/ic_schedule_selector"/>
     <item
         android:id="@+id/postFragment"
         android:title="Post"
-        android:icon="@drawable/ic_launcher_foreground"/>
+        android:icon="@drawable/ic_post_selector"/>
     <item
         android:id="@+id/searchFragment"
         android:title="Search"
-        android:icon="@drawable/ic_launcher_foreground"/>
+        android:icon="@drawable/ic_search_selector"/>
     <item
         android:id="@+id/statusFragment"
         android:title="Status"
-        android:icon="@drawable/ic_launcher_foreground"/>
+        android:icon="@drawable/ic_status_selector"/>
 </menu>
