@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Header: Back and Settings -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingVertical="8dp">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_back"
+            android:contentDescription="Back" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/ivSettings"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_settings"
+            android:contentDescription="Settings" />
+    </LinearLayout>
+
+    <!-- Profile Info -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="16dp">
+
+        <ImageView
+            android:id="@+id/ivProfile"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_profile_placeholder"
+            android:scaleType="centerCrop"
+            android:background="@drawable/circle_background" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp">
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Budiono Siregar"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvRole"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Event Organizer"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+6285819040610"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="linktr.ee/BudionoSiregar"
+                android:textColor="#0080FF"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Edit Profile Button -->
+    <Button
+        android:id="@+id/btnEditProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/primary"
+        android:text="Edit Profile"
+        android:layout_marginTop="16dp" />
+
+    <!-- Tab Menu -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tvFeeds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Feeds"
+                android:textStyle="bold"
+                android:padding="8dp" />
+
+            <View
+                android:id="@+id/indicatorFeeds"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@color/primary"
+                android:visibility="visible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tvMentions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mention"
+                android:padding="8dp" />
+
+            <View
+                android:id="@+id/indicatorMentions"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@color/primary"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFeeds"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="8dp" />
+</LinearLayout>
