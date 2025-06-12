@@ -63,22 +63,58 @@ class SearchFragment : Fragment() {
     }
 
     private fun setupCategoryButtons() {
-        val allButtons = listOf(btnAll, btnEvent, btnSponsor, btnTenant)
+        val multiSelectButtons = listOf(btnEvent, btnSponsor, btnTenant)
 
-        fun updateSelected(button: Button) {
-            allButtons.forEach { it.isSelected = false }
-            button.isSelected = true
-            selectedCategory = button.text.toString()
+        fun updateAllButtonState() {
+            val allInactive = multiSelectButtons.none { it.isSelected }
+            val allActive = multiSelectButtons.all { it.isSelected }
+
+            if (allActive) {
+                // Semua aktif, auto pindah ke ALL
+                multiSelectButtons.forEach { it.isSelected = false }
+                btnAll.isSelected = true
+                selectedCategory = btnAll.text.toString()
+                performSearch()
+            } else if (btnAll.isSelected && !allInactive) {
+                // Jika All aktif dan mulai pilih kategori lain, nonaktifkan All
+                btnAll.isSelected = false
+            }
+
+            if (allInactive) {
+                // Kalau semua mati, aktifkan kembali All
+                btnAll.isSelected = true
+                selectedCategory = btnAll.text.toString()
+                performSearch()
+            }
+        }
+
+        // ALL hanya satu
+        btnAll.setOnClickListener {
+            btnAll.isSelected = true
+            multiSelectButtons.forEach { it.isSelected = false }
+            selectedCategory = btnAll.text.toString()
             performSearch()
         }
 
-        btnAll.setOnClickListener { updateSelected(btnAll) }
-        btnEvent.setOnClickListener { updateSelected(btnEvent) }
-        btnSponsor.setOnClickListener { updateSelected(btnSponsor) }
-        btnTenant.setOnClickListener { updateSelected(btnTenant) }
+        // Event / Sponsor / Tenant bisa multiple
+        multiSelectButtons.forEach { button ->
+            button.setOnClickListener {
+                button.isSelected = !button.isSelected
+                updateAllButtonState()
 
-        // Default selected
+                if (!btnAll.isSelected) {
+                    val selected = multiSelectButtons
+                        .filter { it.isSelected }
+                        .joinToString(", ") { it.text.toString() }
+                    selectedCategory = selected
+                    performSearch()
+                }
+            }
+        }
+
+        // Default state: All aktif
         btnAll.isSelected = true
+        multiSelectButtons.forEach { it.isSelected = false }
     }
 
     private fun performSearch() {
