@@ -1,11 +1,218 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="post Fragment"
-        android:textSize="24sp"/>
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#23285F"
+        android:padding="15dp">
+
+        <ImageView
+            android:id="@+id/iconCancel"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_cancel"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/headerTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New post"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:id="@+id/headerCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:textColor="#B6AFAF"
+            android:textSize="16sp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/header"
+        android:layout_marginTop="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="16dp" >
+
+            <LinearLayout
+                android:id="@+id/dragDropArea"
+                android:layout_width="350dp"
+                android:layout_height="250dp"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="#CAC7C7"
+                android:padding="16dp"
+                android:elevation="4dp"
+                android:layout_gravity="center"
+                android:radius="8dp">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_upload" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Drag and drop here"
+                    android:textColor="#000000"
+                    android:layout_marginTop="8dp" />
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/chooseFileButton"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Choose File"
+                android:textColor="#FFFFFF"
+                android:padding="12dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#23285F"
+                app:cornerRadius="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:layout_marginTop="16dp">
+
+                <!-- Description Label with Icon -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="4dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_description" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Description"
+                        android:textColor="#2D336B"
+                        android:textSize="16sp"
+                        android:layout_marginStart="8dp" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:hint="Description"
+                    android:background="@drawable/edittext_background"
+                    android:padding="12dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Tags Label with Icon -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="4dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_tags" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tags"
+                        android:textColor="#2D336B"
+                        android:textSize="16sp"
+                        android:layout_marginStart="8dp" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/tags"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:hint="Tags"
+                    android:background="@drawable/edittext_background"
+                    android:padding="12dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Location Label with Icon -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="4dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_location" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Location"
+                        android:textColor="#2D336B"
+                        android:textSize="16sp"
+                        android:layout_marginStart="8dp" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/location"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:hint="Location"
+                    android:background="@drawable/edittext_background"
+                    android:padding="12dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="16dp" />
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/postButton"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Post"
+                android:textColor="#FFFFFF"
+                android:padding="12dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#23285F"
+                app:cornerRadius="20dp"
+                android:layout_marginBottom="30dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
