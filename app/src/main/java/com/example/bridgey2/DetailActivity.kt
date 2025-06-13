@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
+import com.example.bridgey2.Fragments.PostProposalActivity
 import com.example.bridgey2.Models.ResponseEvent
 import com.example.bridgey2.databinding.ActivityDetailBinding
 
