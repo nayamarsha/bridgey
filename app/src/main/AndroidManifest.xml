@@ -19,6 +19,9 @@
             android:name=".PostProposalActivity"
             android:exported="false" />
         <activity
+            android:name=".DetailActivity"
+            android:exported="false" />
+        <activity
             android:name="com.example.yourapp.AccountActivity"
             android:exported="false" />
         <activity
