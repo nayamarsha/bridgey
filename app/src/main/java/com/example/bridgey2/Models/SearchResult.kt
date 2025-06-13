@@ -13,9 +13,6 @@ data class SearchResult(
 	@field:SerializedName("name")
 	val name: String? = null,
 
-	@field:SerializedName("description")
-	val description: String? = null,
-
 	@field:SerializedName("location")
 	val location: String? = null,
 
