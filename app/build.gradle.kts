@@ -33,6 +33,18 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    
+    packaging {
+        resources {
+            excludes += setOf(
+                "META-INF/INDEX.LIST",
+                "META-INF/DEPENDENCIES",
+                "META-INF/LICENSE",
+                "META-INF/NOTICE",
+                "/META-INF/io.netty.versions.properties"
+            )
+        }
+
     buildFeatures {
         viewBinding = true
     }
@@ -49,6 +61,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.firebase.appdistribution.gradle)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
