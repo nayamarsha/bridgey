@@ -6,7 +6,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.bridgey2.Fragments.EventFragment
 import com.example.bridgey2.Fragments.SponsorFragment
-import com.example.bridgey2.Fragments.TentFragment
+import com.example.bridgey2.Fragments.TenantFragment
 
 class TabPagerAdapter(
     fragmentManager: FragmentManager,
@@ -19,7 +19,7 @@ class TabPagerAdapter(
         return when (position) {
             0 -> EventFragment()
             1 -> SponsorFragment()
-            2 -> TentFragment()
+            2 -> TenantFragment()
             else -> EventFragment()
         }
     }
