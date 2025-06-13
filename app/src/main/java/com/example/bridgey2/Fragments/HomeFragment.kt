@@ -73,7 +73,7 @@ class HomeFragment : Fragment() {
                 if (response.isSuccessful) {
                     response.body()?.let { sponsorList ->
                         sponsorAdapter = SponsorAdapter(sponsorList)
-                        rvEvent.adapter = sponsorAdapter
+                        rvSponsor.adapter = sponsorAdapter
                     }
                 } else {
                     Toast.makeText(requireContext(), "Error: ${response.message()}", Toast.LENGTH_SHORT).show()
