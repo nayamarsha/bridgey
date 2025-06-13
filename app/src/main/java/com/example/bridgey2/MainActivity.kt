@@ -6,13 +6,23 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+//import com.example.bridgey2.Fragments.ScheduleFragment
+import com.example.bridgey2.Fragments.HomeFragment
 import com.example.bridgey2.databinding.ActivityMainBinding
+//import com.example.bridgey2.Fragments.PostFragment
+//import com.example.bridgey2.Fragments.StatusFragment
+import com.example.bridgey2.Fragments.SearchFragment
+
+
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        // no action bar
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
 
@@ -26,11 +36,5 @@ class MainActivity : AppCompatActivity() {
 
         NavigationUI.setupWithNavController(binding.bottomNavigation, navController)
 
-        // Cek apakah ada perintah untuk navigasi
-        val navigateTo = intent.getStringExtra("navigate_to")
-        if (navigateTo == "home") {
-            // Pindah ke HomeFragment via bottom navigation
-            binding.bottomNavigation.selectedItemId = R.id.homeFragment
-        }
     }
 }
