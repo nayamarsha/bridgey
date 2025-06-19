@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.android.material.button.MaterialButton
 
 class LoginActivity : AppCompatActivity() {
@@ -21,8 +22,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var registerLink: TextView
 
     private var isPasswordVisible = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
@@ -54,9 +55,9 @@ class LoginActivity : AppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility")
     private fun setupPasswordToggle() {
         passInput.setOnTouchListener { _, event ->
-            val DRAWABLE_END = 2
+            val drawableEnd = 2
             if (event.action == MotionEvent.ACTION_UP) {
-                val drawableEnd = passInput.compoundDrawables[DRAWABLE_END]
+                val drawableEnd = passInput.compoundDrawables[drawableEnd]
                 drawableEnd?.let {
                     val bounds = it.bounds
                     val x = event.rawX.toInt()
