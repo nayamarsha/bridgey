@@ -1,6 +1,5 @@
-package com.example.yourapp
+package com.example.bridgey2
 
 data class FeedItem(
-    val title: String,
-    val description: String
+    val imageUrl: String
 )

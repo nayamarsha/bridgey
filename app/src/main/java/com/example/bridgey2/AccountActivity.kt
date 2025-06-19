@@ -1,4 +1,4 @@
-package com.example.yourapp
+package com.example.bridgey2
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,21 +9,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bridgey2.R
+import com.example.yourapp.EditProfileActivity
+import com.example.yourapp.FeedAdapter
 
 class AccountActivity : AppCompatActivity() {
 
     private lateinit var tvName: TextView
     private lateinit var tvRole: TextView
     private lateinit var tvPhone: TextView
-    private lateinit var tvFeeds: TextView
-    private lateinit var tvMentions: TextView
     private lateinit var rvFeeds: RecyclerView
     private lateinit var btnEditProfile: Button
     private lateinit var ivBack: ImageView
     private lateinit var ivSettings: ImageView
 
     private lateinit var feedAdapter: FeedAdapter
-    private var isFeedsSelected = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,17 +31,15 @@ class AccountActivity : AppCompatActivity() {
         tvName = findViewById(R.id.tvName)
         tvRole = findViewById(R.id.tvRole)
         tvPhone = findViewById(R.id.tvPhone)
-        tvFeeds = findViewById(R.id.tvFeeds)
-        tvMentions = findViewById(R.id.tvMentions)
         rvFeeds = findViewById(R.id.rvFeeds)
         btnEditProfile = findViewById(R.id.btnEditProfile)
         ivBack = findViewById(R.id.ivBack)
         ivSettings = findViewById(R.id.ivSettings)
 
-        // Isi awal
+        // Isi data profil
         updateProfile(intent)
 
-        // RecyclerView setup
+        // Setup RecyclerView
         rvFeeds.layoutManager = LinearLayoutManager(this)
         feedAdapter = FeedAdapter(getFeeds())
         rvFeeds.adapter = feedAdapter
@@ -56,18 +53,12 @@ class AccountActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        tvFeeds.setOnClickListener {
-            isFeedsSelected = true
-            updateTabs()
-        }
-
-        tvMentions.setOnClickListener {
-            isFeedsSelected = false
-            updateTabs()
-        }
-
         ivBack.setOnClickListener { finish() }
-        ivSettings.setOnClickListener { /* Tambahkan fitur nanti */ }
+
+        ivSettings.setOnClickListener {
+            val intent = Intent(this, SettingActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun updateProfile(intent: Intent) {
@@ -81,29 +72,11 @@ class AccountActivity : AppCompatActivity() {
         updateProfile(intent)
     }
 
-    private fun updateTabs() {
-        if (isFeedsSelected) {
-            tvFeeds.setBackgroundColor(getColor(R.color.selected_tab))
-            tvMentions.setBackgroundColor(getColor(android.R.color.transparent))
-            feedAdapter.updateData(getFeeds())
-        } else {
-            tvFeeds.setBackgroundColor(getColor(android.R.color.transparent))
-            tvMentions.setBackgroundColor(getColor(R.color.selected_tab))
-            feedAdapter.updateData(getMentions())
-        }
-    }
-
     private fun getFeeds(): List<FeedItem> {
         return listOf(
-            FeedItem("Feed 1", "Deskripsi feed 1"),
-            FeedItem("Feed 2", "Deskripsi feed 2")
-        )
-    }
-
-    private fun getMentions(): List<FeedItem> {
-        return listOf(
-            FeedItem("Mention 1", "Deskripsi mention 1"),
-            FeedItem("Mention 2", "Deskripsi mention 2")
+            FeedItem("https://picsum.photos/600/300?random=1"),
+            FeedItem("https://picsum.photos/600/300?random=2"),
+            FeedItem("https://picsum.photos/600/300?random=3")
         )
     }
 }

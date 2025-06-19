@@ -3,8 +3,10 @@ package com.example.yourapp
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.bridgey2.FeedItem
 import com.example.bridgey2.R
 
 class FeedAdapter(private var items: List<FeedItem>) : RecyclerView.Adapter<FeedAdapter.FeedViewHolder>() {
@@ -26,12 +28,13 @@ class FeedAdapter(private var items: List<FeedItem>) : RecyclerView.Adapter<Feed
     override fun getItemCount(): Int = items.size
 
     class FeedViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val tvTitle: TextView = itemView.findViewById(R.id.tvFeedTitle)
-        private val tvDescription: TextView = itemView.findViewById(R.id.tvFeedDescription)
+        private val ivFeedImage: ImageView = itemView.findViewById(R.id.ivFeedImage)
 
         fun bind(feedItem: FeedItem) {
-            tvTitle.text = feedItem.title
-            tvDescription.text = feedItem.description
+            Glide.with(itemView.context)
+                .load(feedItem.imageUrl)
+                .into(ivFeedImage)
         }
     }
 }
+
