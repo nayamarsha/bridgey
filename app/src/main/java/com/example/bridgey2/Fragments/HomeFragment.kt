@@ -1,5 +1,6 @@
 package com.example.bridgey2.Fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import com.example.bridgey2.Adapters.EventAdapter
 import com.example.bridgey2.Adapters.SponsorAdapter
 import com.example.bridgey2.Models.SearchResult
 import com.example.bridgey2.R
+import com.example.yourapp.AccountActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,6 +29,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var rvEvent: RecyclerView
     private lateinit var rvSponsor: RecyclerView
+    private lateinit var logoButton: View
 
     private lateinit var eventAdapter: EventAdapter
     private lateinit var sponsorAdapter: SponsorAdapter
@@ -40,12 +43,18 @@ class HomeFragment : Fragment() {
 
         rvEvent = view.findViewById(R.id.rv_event)
         rvSponsor = view.findViewById(R.id.rv_sponsor)
+        logoButton = view.findViewById(R.id.logo)
 
         rvEvent.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         rvSponsor.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         fetchEventData()
         fetchSponsorData()
+
+        logoButton.setOnClickListener {
+            val intent = Intent(requireContext(), AccountActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun fetchEventData() {
@@ -87,3 +96,4 @@ class HomeFragment : Fragment() {
     }
 
 }
+
