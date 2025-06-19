@@ -5,28 +5,31 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bridgey2.Adapters.ProposalAdapter
+import com.example.bridgey2.Adapters.StatusAdapter
 import com.example.bridgey2.Models.Proposal
 import com.example.bridgey2.Models.ProposalStatus
 import com.example.bridgey2.R
 
-class StatusFragment : Fragment() {
+class ItemStatusFragment : Fragment() {
+
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: ProposalAdapter
+    private lateinit var adapter: StatusAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // ✅ Gunakan layout page-nya, yaitu list_proposal.xml
-        val view = inflater.inflate(R.layout.list_proposal, container, false)
+        val view = inflater.inflate(R.layout.timeline_detail, container, false)
+        recyclerView = view.findViewById(R.id.statusRecyclerView)
+        val titleView = view.findViewById<TextView>(R.id.proposalTitle)
 
-        recyclerView = view.findViewById(R.id.proposalRecyclerView)
+        // ✅ Ambil ID dari argument
+        val proposalId = arguments?.getString("proposal")
 
-        // ✅ Data dummy sementara
+        // ✅ Dummy data (seperti di StatusFragment)
         val dummyProposals = listOf(
             Proposal(
                 "1", "Tenant A", "https://via.placeholder.com/150", "10 Juni 2025", "On Review",
@@ -46,16 +49,18 @@ class StatusFragment : Fragment() {
             )
         )
 
-        // ✅ Set adapter dan navigasi ke halaman detail jika "details" diklik
-        adapter = ProposalAdapter(dummyProposals) { selectedProposal ->
-            val bundle = Bundle().apply {
-                putString("proposal", selectedProposal.id)
-            }
-            findNavController().navigate(R.id.itemStatusFragment, bundle)
-        }
+        // ✅ Cari proposal berdasarkan ID
+        val selectedProposal = dummyProposals.find { it.id == proposalId }
 
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = adapter
+        if (selectedProposal != null) {
+            titleView.text = "Timeline Proposal: ${selectedProposal.tenantName}"
+
+            adapter = StatusAdapter(selectedProposal.statusList)
+            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            recyclerView.adapter = adapter
+        } else {
+            titleView.text = "Proposal tidak ditemukan"
+        }
 
         return view
     }
