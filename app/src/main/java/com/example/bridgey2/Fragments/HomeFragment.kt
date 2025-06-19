@@ -16,7 +16,7 @@ import com.example.bridgey2.Adapters.EventAdapter
 import com.example.bridgey2.Adapters.SponsorAdapter
 import com.example.bridgey2.Models.SearchResult
 import com.example.bridgey2.R
-import com.example.yourapp.AccountActivity
+import com.example.bridgey2.AccountActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
