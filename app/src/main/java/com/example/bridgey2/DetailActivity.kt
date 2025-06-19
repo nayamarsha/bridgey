@@ -1,3 +1,4 @@
+/*************  ✨ Windsurf Command 🌟  *************/
 package com.example.bridgey2
 
 import android.content.Intent
@@ -28,6 +29,9 @@ class DetailActivity : AppCompatActivity() {
         }
 
         // Ambil data event dari intent
+        intent?.extras?.getParcelable<ResponseEvent>("EVENT_DATA")?.let {
+            event = it
+        } ?: return
         event = intent.getParcelableExtra<ResponseEvent>("EVENT_DATA") ?: return
 
         // Tampilkan data ke view
@@ -47,5 +51,6 @@ class DetailActivity : AppCompatActivity() {
             val intent = Intent(this@DetailActivity, PostProposalActivity::class.java)
             startActivity(intent)
         }
+
     }
 }
