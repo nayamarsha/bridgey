@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
-        installSplashScreen()
         setContentView(binding.root)
 
         val navHostFragment = supportFragmentManager
