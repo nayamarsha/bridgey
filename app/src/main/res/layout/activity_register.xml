@@ -1,47 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"> <RelativeLayout
-    android:id="@+id/header"
-    android:layout_width="match_parent"
-    android:layout_height="140dp"
-    android:background="@android:color/white" android:padding="15dp">
+    android:background="@android:color/white">
 
-    <TextView
-        android:id="@+id/tv_register_title" android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:background="@android:color/white"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/tv_register_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Register"
+            android:textColor="@color/primary"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_register_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="Create your new account"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Register"
-        android:textColor="@color/primary"
-        android:textSize="36sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_register_title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"
-        android:text="Create your new account"
-        android:textColor="@android:color/darker_gray" android:textSize="16sp" />
-
-</RelativeLayout>
+        android:layout_below="@+id/header"
+        android:layout_marginTop="0dp"
+        android:orientation="vertical"
+        android:paddingTop="1dp"
+        android:gravity="center_horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="1dp"
-            android:gravity="center_horizontal">
-
-            <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:paddingHorizontal="16dp"
-            android:layout_marginTop="150dp">
+            android:layout_marginTop="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -51,12 +59,16 @@
                 android:textSize="16sp"
                 android:layout_marginStart="8dp"
                 android:layout_marginBottom="4dp"/>
+
             <EditText
-            android:id="@+id/et_name" android:layout_width="match_parent"
-            android:layout_height="50dp" android:hint="Value"
-            android:inputType="textPersonName" android:background="@drawable/bg_input_grey_outline"
-            android:padding="12dp"
-            android:layout_marginBottom="16dp" />
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Value"
+                android:inputType="textPersonName"
+                android:background="@drawable/bg_input_grey_outline"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -68,10 +80,12 @@
                 android:layout_marginBottom="4dp"/>
 
             <EditText
-                android:id="@+id/et_email" android:layout_width="match_parent"
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:hint="Value"
-                android:inputType="textEmailAddress" android:background="@drawable/bg_input_grey_outline"
+                android:inputType="textEmailAddress"
+                android:background="@drawable/bg_input_grey_outline"
                 android:padding="12dp"
                 android:layout_marginBottom="16dp" />
 
@@ -85,94 +99,106 @@
                 android:layout_marginBottom="4dp"/>
 
             <EditText
-                android:id="@+id/et_password" android:layout_width="match_parent"
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:hint="Value"
-                android:inputType="textPassword" android:background="@drawable/bg_input_grey_outline"
+                android:inputType="textPassword"
+                android:background="@drawable/bg_input_grey_outline"
                 android:padding="12dp"
                 android:layout_marginBottom="24dp" />
 
         </LinearLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_register" android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Login" android:textColor="@android:color/white"
-                android:paddingVertical="12dp"
-                android:textSize="18sp"
-                android:layout_marginTop="5dp"
-                android:backgroundTint="@color/primary" app:cornerRadius="20dp"
-                android:layout_marginBottom="30dp"/>
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Register"
+            android:textColor="@android:color/white"
+            android:paddingVertical="12dp"
+            android:textSize="18sp"
+            android:layout_marginTop="5dp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="6dp"
-                android:paddingHorizontal="16dp"> <View
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="6dp"
+            android:paddingHorizontal="16dp">
+
+            <View
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="1"
                 android:background="@android:color/darker_gray"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" or "
-                    android:textColor="@android:color/darker_gray"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"/>
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/darker_gray"/>
-            </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/btn_sign_up_google_layout" android:layout_width="300dp"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:background="@drawable/google_button_background" android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                android:paddingVertical="12dp"
-                android:layout_marginBottom="32dp"
-                android:layout_marginTop="8dp">
+                android:text=" or "
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"/>
 
-                <ImageView
-                    android:layout_width="24dp"  android:layout_height="24dp" android:src="@drawable/ic_google"
-                    android:layout_marginEnd="8dp" /> <TextView
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="@android:color/darker_gray"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/btn_sign_up_google_layout"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@drawable/google_button_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:paddingVertical="12dp"
+            android:layout_marginBottom="32dp"
+            android:layout_marginTop="8dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_google"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sign up with Google"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
+        </LinearLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Already have an account? "
-                    android:textColor="@color/black"/>
-                <TextView
-                    android:id="@+id/tv_login_link"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Login"
-                    android:textColor="@color/primary" android:textStyle="bold"
-                    android:clickable="true"
-                    android:focusable="true"/>
-            </LinearLayout>
-
-
+                android:text="Already have an account? "
+                android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/tv_login_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true"/>
         </LinearLayout>
+
+    </LinearLayout>
 </RelativeLayout>
