@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -13,13 +14,15 @@
         android:background="#23285F"
         android:padding="15dp">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/iconCancel"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_cancel"
             android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_cancel"
+            android:background="@android:color/transparent"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
         <TextView
             android:id="@+id/headerTitle"
