@@ -19,4 +19,5 @@
         android:id="@+id/statusFragment"
         android:title="Status"
         android:icon="@drawable/ic_status_selector"/>
+
 </menu>
