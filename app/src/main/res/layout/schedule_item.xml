@@ -38,6 +38,7 @@
                 android:layout_marginTop="8dp"
                 android:text="Header"
                 android:textStyle="bold"
+                android:textColor="@color/primary"
                 app:layout_constraintStart_toEndOf="@id/si_logo"
                 app:layout_constraintTop_toTopOf="@id/si_logo" />
 
@@ -51,20 +52,9 @@
                 app:layout_constraintStart_toEndOf="@id/si_logo"
                 app:layout_constraintTop_toBottomOf="@id/si_header" />
 
-            <ImageButton
-                android:id="@+id/si_btnMenu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:src="@drawable/baseline_dehaze_24"
-                app:layout_constraintBottom_toBottomOf="@id/si_logo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/si_logo"
-                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-
             <ImageView
                 android:id="@+id/si_imageView"
-                android:layout_width="match_parent"
+                android:layout_width="200dp"
                 android:layout_height="250dp"
                 android:layout_marginTop="8dp"
                 android:scaleType="fitXY"
@@ -80,6 +70,7 @@
                 android:layout_marginTop="8dp"
                 android:paddingHorizontal="8dp"
                 android:text="Title"
+                android:textColor="@color/primary"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -114,12 +105,17 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnDetail"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
+                android:paddingVertical="4dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:text="Detail"
+                android:textAlignment="center"
                 android:textAllCaps="false"
+                android:text="Detail"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_rounded_primary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/item_scedule_desc" />

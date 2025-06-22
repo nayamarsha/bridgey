@@ -5,63 +5,69 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.TextView // Tetap perlu ini jika menggunakan findViewById
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bridgey2.Adapters.StatusAdapter
-import com.example.bridgey2.Models.Proposal
-import com.example.bridgey2.Models.ProposalStatus
+import com.example.bridgey2.Models.Proposal // Pastikan ini diimpor
 import com.example.bridgey2.R
+import androidx.navigation.fragment.navArgs // Import ini untuk Safe Args
+import com.example.bridgey2.databinding.TimelineDetailBinding // Asumsi nama binding untuk timeline_detail.xml
 
 class ItemStatusFragment : Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
+    // Jika kamu menggunakan View Binding untuk timeline_detail.xml
+    private var _binding: TimelineDetailBinding? = null
+    private val binding get() = _binding!!
     private lateinit var adapter: StatusAdapter
+
+    // Menggunakan Safe Args untuk mengambil argumen
+    private val args: ItemStatusFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.timeline_detail, container, false)
-        recyclerView = view.findViewById(R.id.statusRecyclerView)
-        val titleView = view.findViewById<TextView>(R.id.proposalTitle)
+        // Inflate layout menggunakan View Binding (direkomendasikan)
+        _binding = TimelineDetailBinding.inflate(inflater, container, false)
+        return binding.root
 
-        // ✅ Ambil ID dari argument
-        val proposalId = arguments?.getString("proposal")
+        // Jika kamu masih ingin menggunakan findViewById secara manual:
+        // val view = inflater.inflate(R.layout.timeline_detail, container, false)
+        // return view
+    }
 
-        // ✅ Dummy data (seperti di StatusFragment)
-        val dummyProposals = listOf(
-            Proposal(
-                "1", "Tenant A", "https://via.placeholder.com/150", "10 Juni 2025", "On Review",
-                listOf(
-                    ProposalStatus("Proposal Uploaded", "Menunggu peninjauan", null, "10 Juni 2025 10:00"),
-                    ProposalStatus("On Review", "Proposal sedang ditinjau", null, "11 Juni 2025 15:00", true)
-                )
-            ),
-            Proposal(
-                "2", "Tenant B", "https://via.placeholder.com/150", "9 Juni 2025", "Upload Agreement Document",
-                listOf(
-                    ProposalStatus("Proposal Uploaded", "Terkirim", null, "09 Juni 2025 09:00"),
-                    ProposalStatus("On Review", "Sedang ditinjau", null, "10 Juni 2025 11:00"),
-                    ProposalStatus("Accepted", "Proposal disetujui", null, "11 Juni 2025 13:00"),
-                    ProposalStatus("Upload Agreement Document", "Menunggu unggah dokumen", null, "12 Juni 2025 16:00", true)
-                )
-            )
-        )
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        // ✅ Cari proposal berdasarkan ID
-        val selectedProposal = dummyProposals.find { it.id == proposalId }
+        // Ambil objek Proposal yang dikirimkan melalui Safe Args
+        // Nama "selectedProposal" harus cocok dengan nama <argument> di nav_graph.xml
+        val selectedProposal: Proposal = args.selectedProposal
 
-        if (selectedProposal != null) {
-            titleView.text = "Timeline Proposal: ${selectedProposal.tenantName}"
+        // Sekarang gunakan objek selectedProposal untuk mengisi UI
+        // Jika menggunakan View Binding:
+        binding.proposalTitle.text = "Timeline Proposal: ${selectedProposal.tenantName}"
+        adapter = StatusAdapter(selectedProposal.statusList) // Pastikan nama variabel status history di Proposal
+        binding.statusRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.statusRecyclerView.adapter = adapter
 
-            adapter = StatusAdapter(selectedProposal.statusList)
-            recyclerView.layoutManager = LinearLayoutManager(requireContext())
-            recyclerView.adapter = adapter
-        } else {
-            titleView.text = "Proposal tidak ditemukan"
-        }
 
-        return view
+        // Jika kamu masih menggunakan findViewById:
+        /*
+        val recyclerView: RecyclerView = view.findViewById(R.id.statusRecyclerView)
+        val titleView: TextView = view.findViewById(R.id.proposalTitle)
+
+        titleView.text = "Timeline Proposal: ${selectedProposal.tenantName}"
+
+        adapter = StatusAdapter(selectedProposal.statusHistory) // Pastikan nama variabel status history di Proposal
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = adapter
+        */
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // Penting untuk membersihkan referensi binding
+        _binding = null
     }
 }

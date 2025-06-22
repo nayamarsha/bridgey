@@ -36,22 +36,5 @@ class MainActivity : AppCompatActivity() {
 
         NavigationUI.setupWithNavController(binding.bottomNavigation, navController)
 
-        binding.bottomNavigation.setOnItemSelectedListener { item ->
-            val navController = navHostFragment.navController
-            when (item.itemId) {
-                R.id.statusFragment -> {
-                    if (navController.currentDestination?.id != R.id.statusFragment) {
-                        navController.popBackStack(R.id.statusFragment, false)
-                        navController.navigate(R.id.statusFragment)
-                    }
-                    true
-                }
-                else -> {
-                    NavigationUI.onNavDestinationSelected(item, navController)
-                }
-            }
-        }
-
-
     }
 }
