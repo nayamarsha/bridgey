@@ -5,56 +5,56 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.bridgey2.Adapters.ScheduleEventAdapter
+import com.example.bridgey2.Adapters.ScheduleSponsorAdapter
+import com.example.bridgey2.Api.ApiConfig
+import com.example.bridgey2.Models.ResponseEvent
+import com.example.bridgey2.Models.ResponseSponsor
 import com.example.bridgey2.R
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SponsorFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SponsorFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var sponsorAdapter: ScheduleSponsorAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_sponsor, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SponsorFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SponsorFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        recyclerView = view.findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+
+        fetchSponsors()
+    }
+
+    private fun fetchSponsors() {
+        ApiConfig.getService().getSponsors().enqueue(object : Callback<List<ResponseSponsor>> {
+            override fun onResponse(call: Call<List<ResponseSponsor>>, response: Response<List<ResponseSponsor>>) {
+                if (response.isSuccessful) {
+                    response.body()?.let { sponsors ->
+                        sponsorAdapter = ScheduleSponsorAdapter(sponsors)
+                        recyclerView.adapter = sponsorAdapter
+                    }
+                } else {
+                    Toast.makeText(context, "Failed to fetch events", Toast.LENGTH_SHORT).show()
                 }
             }
+
+            override fun onFailure(call: Call<List<ResponseSponsor>>, t: Throwable) {
+                Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }
