@@ -10,11 +10,13 @@ interface ApiService {
     @GET("event")
     fun getProducts(): Call<List<ResponseEvent>>
 
+    @GET("sponsor")
+    fun getSponsorsOnly(): Call<List<ResponseSponsor>>
+
+
     @GET("event")
     fun getEvents(): Call<List<SearchResult>>
 
-    @GET("sponsor")
-    fun getSponsorsOnly(): Call<List<ResponseSponsor>>
 
     @GET("sponsor")
     fun getSponsors(): Call<List<SearchResult>>
