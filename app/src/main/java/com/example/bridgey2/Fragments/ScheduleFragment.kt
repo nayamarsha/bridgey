@@ -1,11 +1,13 @@
 package com.example.bridgey2.Fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager2.widget.ViewPager2
+import com.example.bridgey2.AccountActivity
 import com.example.bridgey2.Adapters.TabPagerAdapter
 import com.example.bridgey2.R
 import com.google.android.material.tabs.TabLayout
@@ -59,5 +61,14 @@ class ScheduleFragment : Fragment() {
                 tabLayout.selectTab(tabLayout.getTabAt(position))
             }
         })
+
+        val account = view.findViewById<com.google.android.material.imageview.ShapeableImageView>(R.id.account)
+        account.setOnClickListener {
+            val intent = Intent(context, AccountActivity::class.java)
+            startActivity(intent)
+        }
+
     }
+
+
 }

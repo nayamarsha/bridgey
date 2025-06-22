@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -14,7 +15,9 @@
         android:theme="@style/Theme.Bridgey2"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
+        <activity
+            android:name=".DetailSponsorActivity"
+            android:exported="false" />
         <!-- Splash + Login screen -->
         <activity
             android:name=".LoginActivity"
@@ -22,16 +25,13 @@
             android:theme="@style/splashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Main activity (beranda setelah login) -->
+        </activity> <!-- Main activity (beranda setelah login) -->
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
-
-        <!-- Activity lainnya -->
+            android:exported="false" /> <!-- Activity lainnya -->
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
@@ -45,4 +45,5 @@
             android:name=".AccountActivity"
             android:exported="false" />
     </application>
+
 </manifest>

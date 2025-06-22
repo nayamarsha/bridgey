@@ -21,12 +21,10 @@ class StatusFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // ✅ Gunakan layout page-nya, yaitu list_proposal.xml
         val view = inflater.inflate(R.layout.list_proposal, container, false)
 
         recyclerView = view.findViewById(R.id.proposalRecyclerView)
 
-        // ✅ Data dummy sementara
         val dummyProposals = listOf(
             Proposal(
                 "1", "Tenant A", "https://via.placeholder.com/150", "10 Juni 2025", "On Review",
@@ -46,12 +44,13 @@ class StatusFragment : Fragment() {
             )
         )
 
-        // ✅ Set adapter dan navigasi ke halaman detail jika "details" diklik
         adapter = ProposalAdapter(dummyProposals) { selectedProposal ->
             val bundle = Bundle().apply {
-                putString("proposal", selectedProposal.id)
+                // Mengirim objek Proposal lengkap sebagai Parcelable
+                putParcelable("selectedProposal", selectedProposal)
             }
-            findNavController().navigate(R.id.itemStatusFragment, bundle)
+            // Menggunakan ID action yang benar dari nav_graph
+            findNavController().navigate(R.id.action_statusFragment_to_itemStatusFragment, bundle)
         }
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())

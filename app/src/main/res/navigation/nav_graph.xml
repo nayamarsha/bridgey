@@ -19,11 +19,12 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.bridgey2.Fragments.SearchFragment"
-        android:label="SearchFragment" />
+        tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/statusFragment"
         android:name="com.example.bridgey2.Fragments.StatusFragment"
-        android:label="StatusFragment">
+        android:label="StatusFragment"
+        tools:layout="@layout/fragment_status">
         <action
             android:id="@+id/action_statusFragment_to_itemStatusFragment"
             app:destination="@id/itemStatusFragment" />
@@ -32,8 +33,11 @@
     <fragment
         android:id="@+id/itemStatusFragment"
         android:name="com.example.bridgey2.Fragments.ItemStatusFragment"
-        android:label="ItemStatusFragment">
-
+        android:label="ItemStatusFragment"
+        tools:layout="@layout/item_status">
+        <argument
+            android:name="selectedProposal"
+            app:argType="com.example.bridgey2.Models.Proposal" />
     </fragment>
 
 </navigation>

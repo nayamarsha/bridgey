@@ -1,7 +1,9 @@
 package com.example.bridgey2.Models
 
-import java.io.Serializable
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Proposal(
     val id: String,
     val tenantName: String,
@@ -9,4 +11,4 @@ data class Proposal(
     val submissionDate: String,
     val currentStatus: String,
     val statusList: List<ProposalStatus>
-) : Serializable
+) : Parcelable
