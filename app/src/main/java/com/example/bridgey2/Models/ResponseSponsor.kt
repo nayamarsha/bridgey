@@ -22,3 +22,4 @@ data class ResponseSponsor(
 	@field:SerializedName("title")
 	val title: String? = null
 ) : Parcelable
+

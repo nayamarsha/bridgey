@@ -1,39 +1,48 @@
 package com.example.bridgey2.Adapters
 
+import android.content.Intent
+import android.os.Handler
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.bridgey2.DetailActivity
 import com.example.bridgey2.Models.ResponseEvent
-import com.example.bridgey2.R
+import com.example.bridgey2.databinding.ScheduleItemBinding
 
-class ScheduleEventAdapter(private val events: List<ResponseEvent>) : RecyclerView.Adapter<ScheduleEventAdapter.EventViewHolder>() {
+class ScheduleEventAdapter(private val events: List<ResponseEvent>) :
+    RecyclerView.Adapter<ScheduleEventAdapter.EventViewHolder>() {
 
-    class EventViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val imgEvent: ImageView = view.findViewById(R.id.si_imageView)
-        val nameEvent: TextView = view.findViewById(R.id.item_scedule_title)
-        val subtitleEvent: TextView = view.findViewById(R.id.item_scedule_subtitle)
-        val descEvent: TextView = view.findViewById(R.id.item_scedule_desc)
-    }
+    inner class EventViewHolder(val binding: ScheduleItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.schedule_item, parent, false)
-        return EventViewHolder(view)
+        val binding = ScheduleItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return EventViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         val event = events[position]
-        holder.nameEvent.text = event.name ?: "No Title"
-        holder.subtitleEvent.text = event.location ?: "No Location"
-        holder.descEvent.text = event.description ?: "No Description"
+        holder.binding.apply {
+            itemSceduleTitle.text = event.name ?: "No Title"
+            itemSceduleSubtitle.text = event.location ?: "No Location"
+            itemSceduleDesc.text = event.description ?: "No Description"
 
-        // Load image using Glide
-        Glide.with(holder.imgEvent.context)
-            .load(event.imageUrl)
-            .into(holder.imgEvent)
+            Glide.with(siImageView.context)
+                .load(event.imageUrl)
+                .into(siImageView)
+
+            // Tambahkan klik listener ke root view (atau tombol tertentu)
+            holder.binding.btnDetail.setOnClickListener {
+                val intent = Intent(root.context, DetailActivity::class.java)
+                intent.putExtra("EVENT_DATA", event)
+                root.context.startActivity(intent)
+            }
+        }
     }
 
     override fun getItemCount(): Int = events.size

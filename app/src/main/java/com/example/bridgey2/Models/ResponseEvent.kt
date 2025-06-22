@@ -1,7 +1,10 @@
 package com.example.bridgey2.Models
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class ResponseEvent(
 
 	@field:SerializedName("date")
@@ -21,4 +24,4 @@ data class ResponseEvent(
 
 	@field:SerializedName("id")
 	val id: String? = null
-)
+) : Parcelable

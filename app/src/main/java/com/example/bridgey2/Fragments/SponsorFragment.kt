@@ -18,6 +18,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class SponsorFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var sponsorAdapter: ScheduleSponsorAdapter
@@ -40,7 +41,7 @@ class SponsorFragment : Fragment() {
     }
 
     private fun fetchSponsors() {
-        ApiConfig.getService().getSponsors().enqueue(object : Callback<List<ResponseSponsor>> {
+        ApiConfig.getService().getSponsorsOnly().enqueue(object : Callback<List<ResponseSponsor>> {
             override fun onResponse(call: Call<List<ResponseSponsor>>, response: Response<List<ResponseSponsor>>) {
                 if (response.isSuccessful) {
                     response.body()?.let { sponsors ->
