@@ -23,26 +23,29 @@ class RegisterActivity : AppCompatActivity() {
 
         with(binding){
             btnRegister.setOnClickListener{
-                val name = etName.text.toString().trim()
-                val email = etEmail.text.toString().trim().lowercase()
-                val password = etPassword.text.toString().trim()
+                val name = etName.text.toString().trim() // Trim whitespace
+                val email = etEmail.text.toString().trim().lowercase() // PENTING: Ubah email ke lowercase saat mendaftar
+                val password = etPassword.text.toString().trim() // Trim whitespace
 
                 if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
                     Toast.makeText(this@RegisterActivity, "Harap lengkapi semua data!", Toast.LENGTH_LONG).show()
                 } else {
+                    // Check if email already exists
                     usersRef.orderByChild("email").equalTo(email)
                         .addListenerForSingleValueEvent(object : ValueEventListener {
                             override fun onDataChange(snapshot: DataSnapshot) {
                                 if (snapshot.exists()) {
+                                    // Email already exists
                                     Toast.makeText(this@RegisterActivity, "Email ini sudah terdaftar. Gunakan email lain.", Toast.LENGTH_LONG).show()
                                 } else {
+                                    // Email does not exist, proceed with registration
                                     val userId = usersRef.push().key
 
                                     if (userId != null) {
                                         val userData = HashMap<String, String>()
                                         userData["username"] = name
                                         userData["email"] = email
-                                        userData["password"] = password
+                                        userData["password"] = password // Warning: In a real app, hash passwords!
 
                                         usersRef.child(userId).setValue(userData)
                                             .addOnSuccessListener {
