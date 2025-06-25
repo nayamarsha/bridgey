@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.bridgey2.Models.ResponseSponsor
 import com.example.bridgey2.R
 
-class SponsorAdapter(private val sponsors: List<ResponseSponsor>) :
+class    SponsorAdapter(private val sponsors: List<ResponseSponsor>) :
     RecyclerView.Adapter<SponsorAdapter.SponsorViewHolder>() {
 
     class SponsorViewHolder(view: View) : RecyclerView.ViewHolder(view) {

@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bridgey2.R
-import com.example.yourapp.EditProfileActivity
+import com.example.bridgey2.EditProfileActivity
 import com.example.yourapp.FeedAdapter
 
 class AccountActivity : AppCompatActivity() {
