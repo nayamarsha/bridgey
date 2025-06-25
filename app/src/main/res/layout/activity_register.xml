@@ -96,12 +96,16 @@
             <EditText
                 android:id="@+id/et_password"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:hint="Enter password"
-                android:inputType="textPassword"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/bg_input_grey_outline"
+                android:drawableEnd="@drawable/ic_eye_closed"
+                android:hint="Enter password"
                 android:padding="12dp"
-                android:layout_marginBottom="24dp" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text2" />
+
 
         </LinearLayout>
 
@@ -109,7 +113,7 @@
             android:id="@+id/btn_register" android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Login" android:textColor="@android:color/white"
+            android:text="Create" android:textColor="@android:color/white"
             android:paddingVertical="12dp"
             android:textSize="18sp"
             android:layout_marginTop="5dp"
