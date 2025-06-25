@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "834544676150",
+    "project_id": "bridgey-be93a",
+    "storage_bucket": "bridgey-be93a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834544676150:android:6a15504193a8b663fd5797",
+        "android_client_info": {
+          "package_name": "com.example.bridgey2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_AQwBgAfHbeiBoipiP3bC_njCFo8RW9Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

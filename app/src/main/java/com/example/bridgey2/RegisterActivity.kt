@@ -1,11 +1,79 @@
 package com.example.bridgey2
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.bridgey2.databinding.ActivityRegisterBinding
+import com.google.firebase.Firebase
+import com.google.firebase.database.database
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 
 class RegisterActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityRegisterBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        val database = Firebase.database("https://bridgey-be93a-default-rtdb.firebaseio.com/")
+        val usersRef = database.getReference("users")
+
+        with(binding){
+            btnRegister.setOnClickListener{
+                val name = etName.text.toString().trim() // Trim whitespace
+                val email = etEmail.text.toString().trim().lowercase() // PENTING: Ubah email ke lowercase saat mendaftar
+                val password = etPassword.text.toString().trim() // Trim whitespace
+
+                if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(this@RegisterActivity, "Harap lengkapi semua data!", Toast.LENGTH_LONG).show()
+                } else {
+                    // Check if email already exists
+                    usersRef.orderByChild("email").equalTo(email)
+                        .addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                if (snapshot.exists()) {
+                                    // Email already exists
+                                    Toast.makeText(this@RegisterActivity, "Email ini sudah terdaftar. Gunakan email lain.", Toast.LENGTH_LONG).show()
+                                } else {
+                                    // Email does not exist, proceed with registration
+                                    val userId = usersRef.push().key
+
+                                    if (userId != null) {
+                                        val userData = HashMap<String, String>()
+                                        userData["username"] = name
+                                        userData["email"] = email
+                                        userData["password"] = password // Warning: In a real app, hash passwords!
+
+                                        usersRef.child(userId).setValue(userData)
+                                            .addOnSuccessListener {
+                                                Toast.makeText(this@RegisterActivity, "Registrasi berhasil!", Toast.LENGTH_LONG).show()
+                                                val gotoLogin = Intent(this@RegisterActivity, LoginActivity::class.java)
+                                                startActivity(gotoLogin)
+                                                finish()
+                                            }
+                                            .addOnFailureListener {
+                                                Toast.makeText(this@RegisterActivity, "Registrasi gagal: ${it.message}", Toast.LENGTH_LONG).show()
+                                            }
+                                    } else {
+                                        Toast.makeText(this@RegisterActivity, "Gagal membuat ID pengguna.", Toast.LENGTH_LONG).show()
+                                    }
+                                }
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                Toast.makeText(this@RegisterActivity, "Terjadi kesalahan saat memeriksa email: ${error.message}", Toast.LENGTH_LONG).show()
+                            }
+                        })
+                }
+            }
+
+            tvLoginLink.setOnClickListener{
+                val toLogin = Intent(this@RegisterActivity, LoginActivity::class.java)
+                startActivity(toLogin)
+            }
+        }
     }
 }
