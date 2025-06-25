@@ -52,9 +52,6 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
     implementation("androidx.gridlayout:gridlayout:1.1.0")
 
-
-
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -78,5 +75,5 @@ dependencies {
     implementation(libs.firebase.database.ktx)
     implementation(libs.firebase.database)
 
-}}
+}
 
