@@ -71,7 +71,7 @@ class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 holder.title.text = item.name
                 holder.desc.text = item.title
                 Glide.with(holder.itemView.context)
-                    .load(item.imageUrl)
+                    .load(item.logo)
                     .placeholder(R.drawable.temp_poster)
                     .into(holder.logo)
             }
