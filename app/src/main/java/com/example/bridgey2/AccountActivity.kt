@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bridgey2.R
-import com.example.yourapp.EditProfileActivity
-import com.example.yourapp.FeedAdapter
+import com.example.bridgey2.EditProfileActivity
+import com.example.bridgey2.FeedAdapter
 
 class AccountActivity : AppCompatActivity() {
 
@@ -53,12 +53,13 @@ class AccountActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        ivBack.setOnClickListener { finish() }
-
         ivSettings.setOnClickListener {
             val intent = Intent(this, SettingActivity::class.java)
             startActivity(intent)
         }
+
+        ivBack.setOnClickListener { finish() }
+
     }
 
     private fun updateProfile(intent: Intent) {
