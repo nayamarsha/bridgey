@@ -25,11 +25,16 @@ class PostFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_post, container, false)
 
         view.findViewById<MaterialButton>(R.id.postButton).setOnClickListener {
+            view.findNavController().navigate(R.id.action_postFragment_to_homeFragment)
+        }
+
+        view.findViewById<MaterialButton>(R.id.chooseFileButton).setOnClickListener {
             requestPermission()
         }
 
         return view
     }
+
 
     private fun requestPermission() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -50,8 +55,9 @@ class PostFragment : Fragment() {
     }
 
     private fun chooseFileButton() {
-        val intent = Intent(Intent.ACTION_VIEW, MediaStore.Downloads.EXTERNAL_CONTENT_URI)
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "*/*"
-        startActivity(intent)
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        startActivity(Intent.createChooser(intent, "Pilih file"))
     }
 }
