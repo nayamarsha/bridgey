@@ -1,0 +1,15 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Outer circle -->
+    <item>
+        <shape android:shape="oval">
+            <size android:width="40dp" android:height="40dp"/>
+            <stroke android:color="#ffff"/> <!-- Warna biru muda -->
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="oval">
+            <size android:width="2dp" android:height="12dp"/>
+            <solid android:color="#A9B5DF"/> <!-- Warna biru muda sama -->
+        </shape>
+    </item>
+</layer-list>

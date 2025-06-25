@@ -7,11 +7,12 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 //import com.example.bridgey2.Fragments.ScheduleFragment
-import com.example.bridgey2.Fragments.HomeFragment
-import com.example.bridgey2.databinding.ActivityMainBinding
+//import com.example.bridgey2.Fragments.HomeFragment
+import com.example.bridgey2.MainActivity
 //import com.example.bridgey2.Fragments.PostFragment
 //import com.example.bridgey2.Fragments.StatusFragment
-//import com.example.bridgey2.Fragments.SearchFragment
+import com.example.bridgey2.Fragments.SearchFragment
+import com.example.bridgey2.databinding.ActivityMainBinding
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -27,7 +28,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
-        installSplashScreen()
         setContentView(binding.root)
 
         val navHostFragment = supportFragmentManager

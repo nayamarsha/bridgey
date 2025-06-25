@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
@@ -13,10 +14,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import android.widget.Button
+
 import com.example.bridgey2.R
 import com.google.android.material.button.MaterialButton
 
 class PostFragment : Fragment() {
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_post, container, false)
 
@@ -51,4 +55,3 @@ class PostFragment : Fragment() {
         startActivity(intent)
     }
 }
-

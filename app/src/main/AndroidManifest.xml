@@ -9,14 +9,18 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:usesCleartextTraffic="true"
+        android:label="Bridgey"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Bridgey2"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".DetailSponsorActivity"
+            android:exported="false" />
+        <!-- Splash + Login screen -->
+        <activity
+            android:name=".LoginActivity"
             android:exported="true"
             android:theme="@style/splashScreen">
             <intent-filter>
@@ -24,7 +28,22 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity> <!-- Main activity (beranda setelah login) -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" /> <!-- Activity lainnya -->
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PostProposalActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AccountActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

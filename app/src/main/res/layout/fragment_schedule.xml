@@ -12,7 +12,7 @@
         android:layout_margin="16dp">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/logo"
+        android:id="@+id/account"
         android:layout_width="50dp"
         android:layout_height="50dp"
 

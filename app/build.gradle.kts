@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("kotlin-parcelize")
+    id ("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -33,6 +35,18 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    
+    packaging {
+        resources {
+            excludes += setOf(
+                "META-INF/INDEX.LIST",
+                "META-INF/DEPENDENCIES",
+                "META-INF/LICENSE",
+                "META-INF/NOTICE",
+                "/META-INF/io.netty.versions.properties"
+            )
+        }
+
     buildFeatures {
         viewBinding = true
     }
@@ -49,11 +63,21 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.firebase.appdistribution.gradle)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("androidx.core:core-splashscreen:1.0.0")
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
     implementation ("com.google.android.material:material:1.12.0")
+    implementation ("androidx.core:core-ktx:1.12.0")
+    implementation ("androidx.cardview:cardview:1.0.0")
 
+}}
+dependencies {
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.gridlayout)
 }
