@@ -1,10 +1,10 @@
 package com.example.bridgey2.Api
 import com.example.bridgey2.Models.ResponseEvent
 import com.example.bridgey2.Models.ResponseSponsor
-import com.example.bridgey2.Models.SearchResult
+import com.example.bridgey2.Models.SearchEvent
+import com.example.bridgey2.Models.SearchSponsor
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.Query
 
 interface ApiService {
     @GET("event")
@@ -15,13 +15,12 @@ interface ApiService {
 
 
     @GET("event")
-    fun getEvents(): Call<List<SearchResult>>
-
+    fun getEvents(): Call<List<SearchEvent>>
 
     @GET("sponsor")
-    fun getSponsors(): Call<List<SearchResult>>
+    fun getSponsors(): Call<List<SearchSponsor>>
 
     @GET("tenant")
-    fun getTenants(): Call<List<SearchResult>>
+    fun getTenants(): Call<List<SearchEvent>>
 
 }

@@ -10,9 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bridgey2.R
-import com.example.bridgey2.Models.SearchResult
+import com.example.bridgey2.Models.SearchEvent
 import com.example.bridgey2.Api.ApiConfig
 import com.example.bridgey2.Adapters.SearchAdapter
+import com.example.bridgey2.Models.SearchItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -118,29 +119,28 @@ class SearchFragment : Fragment() {
         val query = searchInput.text.toString().trim()
         val service = ApiConfig.getService()
 
-        val allList = mutableListOf<SearchResult>()
+        val allList = mutableListOf<SearchItem>()
 
-        // Fungsi ambil data lalu filter lokal
-        fun fetchAndFilter(call: Call<List<SearchResult>>, onComplete: () -> Unit) {
-            call.enqueue(object : Callback<List<SearchResult>> {
-                override fun onResponse(call: Call<List<SearchResult>>, response: Response<List<SearchResult>>) {
+        fun <T : SearchItem> fetchAndFilter(call: Call<List<T>>, onComplete: () -> Unit) {
+            call.enqueue(object : Callback<List<T>> {
+                override fun onResponse(call: Call<List<T>>, response: Response<List<T>>) {
                     if (response.isSuccessful) {
                         val filtered = response.body()?.filter {
                             it.name?.contains(query, ignoreCase = true) == true
                         } ?: emptyList()
-                        allList.addAll(filtered)
+                        allList.addAll(filtered as Collection<SearchItem>)
                     }
                     onComplete()
                 }
 
-                override fun onFailure(call: Call<List<SearchResult>>, t: Throwable) {
+                override fun onFailure(call: Call<List<T>>, t: Throwable) {
                     t.printStackTrace()
                     onComplete()
                 }
             })
         }
 
-        val calls = mutableListOf<Call<List<SearchResult>>>()
+        val calls = mutableListOf<Call<out List<out SearchItem>>>()
 
         if (selectedCategory.contains("All")) {
             calls.add(service.getEvents())
@@ -156,7 +156,8 @@ class SearchFragment : Fragment() {
         if (remaining == 0) return
 
         calls.forEach { call ->
-            fetchAndFilter(call) {
+            @Suppress("UNCHECKED_CAST")
+            fetchAndFilter(call as Call<List<SearchItem>>) {
                 remaining--
                 if (remaining == 0) {
                     adapter.submitList(allList)
