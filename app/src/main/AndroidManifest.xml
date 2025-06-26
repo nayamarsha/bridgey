@@ -47,7 +47,6 @@
         <activity
             android:name=".EditProfileActivity"
             android:exported="false" />
-
         <activity
             android:name=".SettingActivity"
             android:exported="false" />
