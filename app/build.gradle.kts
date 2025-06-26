@@ -4,6 +4,7 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("kotlin-parcelize")
     alias(libs.plugins.google.gms.google.services)
+
 }
 
 android {
@@ -51,6 +52,10 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.12.0")
     implementation("androidx.core:core-splashscreen:1.0.1")
     implementation("androidx.gridlayout:gridlayout:1.1.0")
+    implementation("com.google.firebase:firebase-auth:22.3.1")
+    implementation("com.google.firebase:firebase-database:20.3.0")
+    implementation("com.google.android.gms:play-services-auth:21.1.1")
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
