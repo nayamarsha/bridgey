@@ -10,18 +10,31 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.bridgey2.databinding.ActivityLoginBinding // Import kelas binding yang dihasilkan
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.Firebase
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.database
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.DatabaseReference // Import DatabaseReference
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding // Deklarasikan variabel binding
 
     private var isPasswordVisible = false
+    private lateinit var googleSignInClient: GoogleSignInClient
+
+    companion object {
+        private const val RC_SIGN_IN = 1001
+    }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen() // Memasang splash screen
@@ -45,8 +58,18 @@ class LoginActivity : AppCompatActivity() {
         // Menyiapkan onClickListener untuk tombol login dengan Google (jika diimplementasikan)
         binding.googleButton.setOnClickListener {
             Toast.makeText(this, "Login with Google clicked", Toast.LENGTH_SHORT).show()
-            // Implementasi logika login Google di sini
+            val signInIntent = googleSignInClient.signInIntent
+            startActivityForResult(signInIntent, RC_SIGN_IN)
+
         }
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))  // dapat dari google-services.json
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+
 
         // Menyiapkan onClickListener untuk link register
         binding.registerLink.setOnClickListener {
@@ -55,6 +78,21 @@ class LoginActivity : AppCompatActivity() {
             finish() // Menutup LoginActivity agar tidak bisa kembali dengan tombol back dari RegisterActivity
         }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == RC_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account = task.getResult(ApiException::class.java)
+                firebaseAuthWithGoogle(account.idToken!!)
+            } catch (e: ApiException) {
+                Toast.makeText(this, "Login Google gagal: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
 
     /**
      * Mengatur fungsionalitas toggle visibilitas password.
@@ -155,4 +193,21 @@ class LoginActivity : AppCompatActivity() {
                 }
             })
     }
+
+    private fun firebaseAuthWithGoogle(idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        FirebaseAuth.getInstance().signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Login berhasil, arahkan ke MainActivity
+                    val user = FirebaseAuth.getInstance().currentUser
+                    Toast.makeText(this, "Login sebagai ${user?.email}", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                } else {
+                    Toast.makeText(this, "Autentikasi Firebase gagal", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
 }
