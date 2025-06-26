@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"> <RelativeLayout
+    android:background="@android:color/white">
+
+    <RelativeLayout
     android:id="@+id/header"
     android:layout_width="match_parent"
     android:layout_height="140dp"
@@ -96,12 +99,17 @@
             <EditText
                 android:id="@+id/et_password"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_input_grey_outline"
+                android:drawableEnd="@drawable/ic_eye_closed"
                 android:hint="Enter password"
                 android:inputType="textPassword"
-                android:background="@drawable/bg_input_grey_outline"
                 android:padding="12dp"
-                android:layout_marginBottom="24dp" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text2" />
+
 
         </LinearLayout>
 
@@ -109,7 +117,7 @@
             android:id="@+id/btn_register" android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Login" android:textColor="@android:color/white"
+            android:text="Register" android:textColor="@android:color/white"
             android:paddingVertical="12dp"
             android:textSize="18sp"
             android:layout_marginTop="5dp"
@@ -185,10 +193,12 @@
                     android:id="@+id/tv_login_link"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Login"
-                    android:textColor="@color/primary" android:textStyle="bold"
                     android:clickable="true"
-                    android:focusable="true"/>
+                    android:focusable="true"
+                    android:text="Login"
+                    android:textColor="@color/primary"
+                    android:textStyle="bold"
+                    tools:ignore="TouchTargetSizeCheck" />
 
             </LinearLayout>
         </LinearLayout>

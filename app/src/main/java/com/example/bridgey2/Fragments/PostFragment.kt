@@ -1,44 +1,45 @@
 package com.example.bridgey2.Fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts // Import ini
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+
 import com.example.bridgey2.R
+import com.google.android.material.button.MaterialButton
 
 class PostFragment : Fragment() {
 
-    private lateinit var btnPost: Button
-    private lateinit var btnCancel: Button
+    private val selectFileLauncher = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri ->
+        if (uri != null) {
+            Toast.makeText(requireContext(), "File dipilih: ${uri.lastPathSegment}", Toast.LENGTH_LONG).show()
+        } else {
+            Toast.makeText(requireContext(), "Pemilihan file dibatalkan.", Toast.LENGTH_SHORT).show()
+        }
+    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_post, container, false)
 
-        // Inisialisasi button
-        btnPost = view.findViewById(R.id.postButton)
-        val btnCancel = view.findViewById<View?>(R.id.headerCancel)
-
-        // Event klik tombol POST
-        btnPost.setOnClickListener {
-            // Disini kamu bisa tambahkan logika posting data, misalnya validasi atau API call
-            Toast.makeText(requireContext(), "Post Berhasil!", Toast.LENGTH_SHORT).show()
-
-            // Setelah posting, kembalikan ke fragment sebelumnya atau fragment lain
-            requireActivity().supportFragmentManager.popBackStack()
+        view.findViewById<MaterialButton>(R.id.postButton).setOnClickListener {
+            view.findNavController().navigate(R.id.action_postFragment_to_homeFragment)
         }
 
-        // Event klik tombol Cancel atau Next
-        btnCancel?.setOnClickListener {
-            // Kembali ke fragment sebelumnya atau fragment lain
-            requireActivity().supportFragmentManager.popBackStack()
+        view.findViewById<MaterialButton>(R.id.chooseFileButton).setOnClickListener {
+            chooseFile()
         }
 
         return view
+    }
+
+    private fun chooseFile() {
+        selectFileLauncher.launch("*/*")
     }
 }

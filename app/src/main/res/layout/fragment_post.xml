@@ -11,14 +11,6 @@
         android:background="#23285F"
         android:padding="15dp">
 
-        <ImageView
-            android:id="@+id/iconCancel"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_cancel"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"/>
-
         <TextView
             android:id="@+id/headerTitle"
             android:layout_width="wrap_content"
@@ -70,14 +62,6 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:src="@drawable/ic_upload" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Drag and drop here"
-                    android:textColor="#000000"
-                    android:layout_marginTop="8dp" />
-
             </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
@@ -99,7 +83,39 @@
                 android:paddingHorizontal="16dp"
                 android:layout_marginTop="16dp">
 
-                <!-- Description Label with Icon -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="4dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Title"
+                        android:textColor="#2D336B"
+                        android:textSize="16sp"
+                        android:layout_marginStart="8dp" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:hint="Title"
+                    android:background="@drawable/edittext_background"
+                    android:padding="12dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="16dp" />
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -132,7 +148,6 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="16dp" />
 
-                <!-- Tags Label with Icon -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -143,19 +158,19 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_tags" />
+                        android:src="@drawable/ic_date" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tags"
+                        android:text="Date"
                         android:textColor="#2D336B"
                         android:textSize="16sp"
                         android:layout_marginStart="8dp" />
 
                 </LinearLayout>
 
-                <EditText
+                <DatePicker
                     android:id="@+id/tags"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
@@ -165,7 +180,6 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="16dp" />
 
-                <!-- Location Label with Icon -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
