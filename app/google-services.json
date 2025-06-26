@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "834544676150-rhkqpv6383cln996ni150949g1m8uknp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bridgey2",
+            "certificate_hash": "6c2b7742f6bb3877ef828156423af9ae00a97b97"
+          }
+        },
+        {
           "client_id": "834544676150-v442fine6a8t4k0h9mrnpc7tldoculs2.apps.googleusercontent.com",
           "client_type": 3
         }
