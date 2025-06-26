@@ -45,8 +45,8 @@
             android:orientation="vertical"
             android:paddingTop="16dp" >
 
-            <LinearLayout
-                android:id="@+id/dragDropArea"
+            <ImageView
+                android:id="@+id/imageView"
                 android:layout_width="350dp"
                 android:layout_height="250dp"
                 android:layout_marginTop="30dp"
@@ -57,20 +57,16 @@
                 android:elevation="4dp"
                 android:layout_gravity="center"
                 android:radius="8dp">
-
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/ic_upload" />
-            </LinearLayout>
+            </ImageView>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/chooseFileButton"
+                android:id="@+id/chooseImageButton"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Choose File"
                 android:textColor="#FFFFFF"
+                android:onClick="insert_Img"
                 android:padding="12dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#23285F"
@@ -170,11 +166,11 @@
 
                 </LinearLayout>
 
-                <DatePicker
-                    android:id="@+id/tags"
+                <EditText
+                    android:id="@+id/date"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:hint="Tags"
+                    android:hint="Date"
                     android:background="@drawable/edittext_background"
                     android:padding="12dp"
                     android:layout_marginTop="10dp"
@@ -212,6 +208,38 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="16dp" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="4dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_cp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Contact Person"
+                        android:textColor="#2D336B"
+                        android:textSize="16sp"
+                        android:layout_marginStart="8dp" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/cp"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:hint="Contact Person"
+                    android:background="@drawable/edittext_background"
+                    android:padding="12dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="16dp" />
+
             </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
@@ -221,6 +249,7 @@
                 android:layout_gravity="center"
                 android:text="Post"
                 android:textColor="#FFFFFF"
+                android:onClick="insert_data"
                 android:padding="12dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#23285F"
