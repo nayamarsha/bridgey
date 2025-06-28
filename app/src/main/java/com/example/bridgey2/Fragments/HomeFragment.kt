@@ -10,12 +10,17 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bridgey2.Api.ApiConfig
-import com.example.bridgey2.Models.ResponseEvent
 import com.example.bridgey2.Models.ResponseSponsor
 import com.example.bridgey2.Adapters.EventAdapter
 import com.example.bridgey2.Adapters.SponsorAdapter
 import com.example.bridgey2.R
 import com.example.bridgey2.AccountActivity
+import com.example.bridgey2.Models.Post
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,6 +28,9 @@ import retrofit2.Response
 class HomeFragment : Fragment() {
 
     private lateinit var rvEvent: RecyclerView
+    private lateinit var db: DatabaseReference
+    private lateinit var eventArrayList: ArrayList<Post>
+
     private lateinit var rvSponsor: RecyclerView
     private lateinit var logoButton: View
 
@@ -37,6 +45,9 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         rvEvent = view.findViewById(R.id.rv_event)
+        rvEvent.hasFixedSize()
+        eventArrayList = arrayListOf<Post>()
+
         rvSponsor = view.findViewById(R.id.rv_sponsor)
         logoButton = view.findViewById(R.id.logo)
 
@@ -52,21 +63,40 @@ class HomeFragment : Fragment() {
         }
     }
 
+//    private fun fetchEventData() {
+//        ApiConfig.getService().getProducts().enqueue(object : Callback<List<ResponseEvent>> {
+//            override fun onResponse(call: Call<List<ResponseEvent>>, response: Response<List<ResponseEvent>>) {
+//                if (response.isSuccessful) {
+//                    response.body()?.let { eventList ->
+//                        eventAdapter = EventAdapter(eventList)
+//                        rvEvent.adapter = eventAdapter
+//                    }
+//                } else {
+//                    Toast.makeText(requireContext(), "Error: ${response.message()}", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<List<ResponseEvent>>, t: Throwable) {
+//                Toast.makeText(requireContext(), t.localizedMessage, Toast.LENGTH_SHORT).show()
+//            }
+//        })
+//    }
     private fun fetchEventData() {
-        ApiConfig.getService().getProducts().enqueue(object : Callback<List<ResponseEvent>> {
-            override fun onResponse(call: Call<List<ResponseEvent>>, response: Response<List<ResponseEvent>>) {
-                if (response.isSuccessful) {
-                    response.body()?.let { eventList ->
-                        eventAdapter = EventAdapter(eventList)
-                        rvEvent.adapter = eventAdapter
+        db = FirebaseDatabase.getInstance().getReference("events")
+        db.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    for(eventSnapshot in snapshot.children){
+                        val event = eventSnapshot.getValue(Post::class.java)
+                        eventArrayList.add(event!!)
                     }
-                } else {
-                    Toast.makeText(requireContext(), "Error: ${response.message()}", Toast.LENGTH_SHORT).show()
+                    eventAdapter = EventAdapter(eventArrayList)
+                    rvEvent.adapter = eventAdapter
                 }
             }
 
-            override fun onFailure(call: Call<List<ResponseEvent>>, t: Throwable) {
-                Toast.makeText(requireContext(), t.localizedMessage, Toast.LENGTH_SHORT).show()
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, "Database error: ${error.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }
