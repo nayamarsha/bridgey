@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Sponsor Name"
+                android:text="Tenant Name"
                 android:textStyle="bold"
                 android:textSize="20sp" />
 
@@ -41,7 +41,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Open Sponsorship"
+                android:text="Tenant"
+                android:textColor="#D3D3D3"
                 android:textSize="18sp"/>
 
         </LinearLayout>

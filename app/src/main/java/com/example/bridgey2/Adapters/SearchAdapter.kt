@@ -44,6 +44,10 @@ class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 val view = LayoutInflater.from(parent.context).inflate(R.layout.item_search_sponsor, parent, false)
                 SponsorViewHolder(view)
             }
+            TYPE_TENANT -> {
+                val view = LayoutInflater.from(parent.context).inflate(R.layout.item_search_tenant, parent, false)
+                SponsorViewHolder(view)
+            }
             else -> {
                 val view = LayoutInflater.from(parent.context).inflate(R.layout.item_search_event, parent, false)
                 EventViewHolder(view)
@@ -69,7 +73,13 @@ class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
             is SponsorViewHolder -> {
                 holder.title.text = item.name
-                holder.desc.text = item.title
+                Glide.with(holder.itemView.context)
+                    .load(item.logo)
+                    .placeholder(R.drawable.temp_poster)
+                    .into(holder.logo)
+            }
+            is SponsorViewHolder -> {
+                holder.title.text = item.name
                 Glide.with(holder.itemView.context)
                     .load(item.logo)
                     .placeholder(R.drawable.temp_poster)
@@ -87,7 +97,6 @@ class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class SponsorViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val title: TextView = view.findViewById(R.id.itemTitle)
-        val desc: TextView = view.findViewById(R.id.itemDesc)
         val logo: ImageView = view.findViewById(R.id.photos)
     }
 }

@@ -44,7 +44,6 @@ class EventFragment : Fragment() {
         db.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 eventArrayList.clear()
-
                 if (snapshot.exists()) {
                     for (eventSnapshot in snapshot.children) {
                         val event = eventSnapshot.getValue(Post::class.java)

@@ -1,5 +1,6 @@
 package com.example.bridgey2.Fragments
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,14 +10,13 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bridgey2.R
-import com.example.bridgey2.Models.SearchEvent
-import com.example.bridgey2.Api.ApiConfig
 import com.example.bridgey2.Adapters.SearchAdapter
 import com.example.bridgey2.Models.SearchItem
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.bridgey2.Models.SearchItemImpl
+import com.example.bridgey2.R
+import com.google.firebase.database.*
+import java.io.File
+import java.io.FileOutputStream
 
 class SearchFragment : Fragment() {
 
@@ -35,7 +35,7 @@ class SearchFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_search, container, false)
+    ): View = inflater.inflate(R.layout.fragment_search, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,6 +58,8 @@ class SearchFragment : Fragment() {
         searchButton.setOnClickListener {
             performSearch()
         }
+
+        performSearch()
     }
 
     private fun setupCategoryButtons() {
@@ -68,33 +70,28 @@ class SearchFragment : Fragment() {
             val allActive = multiSelectButtons.all { it.isSelected }
 
             if (allActive) {
-                // Semua aktif, auto pindah ke ALL
                 multiSelectButtons.forEach { it.isSelected = false }
                 btnAll.isSelected = true
-                selectedCategory = btnAll.text.toString()
+                selectedCategory = "All"
                 performSearch()
             } else if (btnAll.isSelected && !allInactive) {
-                // Jika All aktif dan mulai pilih kategori lain, nonaktifkan All
                 btnAll.isSelected = false
             }
 
             if (allInactive) {
-                // Kalau semua mati, aktifkan kembali All
                 btnAll.isSelected = true
-                selectedCategory = btnAll.text.toString()
+                selectedCategory = "All"
                 performSearch()
             }
         }
 
-        // ALL hanya satu
         btnAll.setOnClickListener {
             btnAll.isSelected = true
             multiSelectButtons.forEach { it.isSelected = false }
-            selectedCategory = btnAll.text.toString()
+            selectedCategory = "All"
             performSearch()
         }
 
-        // Event / Sponsor / Tenant bisa multiple
         multiSelectButtons.forEach { button ->
             button.setOnClickListener {
                 button.isSelected = !button.isSelected
@@ -110,59 +107,100 @@ class SearchFragment : Fragment() {
             }
         }
 
-        // Default state: All aktif
         btnAll.isSelected = true
         multiSelectButtons.forEach { it.isSelected = false }
     }
 
     private fun performSearch() {
         val query = searchInput.text.toString().trim()
-        val service = ApiConfig.getService()
+        val resultList = mutableListOf<SearchItem>()
 
-        val allList = mutableListOf<SearchItem>()
+        val selectedPaths = mutableListOf<String>()
+        if (selectedCategory.contains("All")) {
+            selectedPaths.addAll(listOf("events", "sponsors", "tenants"))
+        } else {
+            if (selectedCategory.contains("Event")) selectedPaths.add("events")
+            if (selectedCategory.contains("Sponsor")) selectedPaths.add("sponsors")
+            if (selectedCategory.contains("Tenant")) selectedPaths.add("tenants")
+        }
 
-        fun <T : SearchItem> fetchAndFilter(call: Call<List<T>>, onComplete: () -> Unit) {
-            call.enqueue(object : Callback<List<T>> {
-                override fun onResponse(call: Call<List<T>>, response: Response<List<T>>) {
-                    if (response.isSuccessful) {
-                        val filtered = response.body()?.filter {
-                            it.name?.contains(query, ignoreCase = true) == true
-                        } ?: emptyList()
-                        allList.addAll(filtered as Collection<SearchItem>)
+        var remaining = selectedPaths.size
+        if (remaining == 0) return
+
+        for (path in selectedPaths) {
+            val dbRef = FirebaseDatabase.getInstance().getReference(path)
+            dbRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (child in snapshot.children) {
+                        when (path) {
+                            "events" -> {
+                                val title = child.child("eventTitle").getValue(String::class.java)
+                                if (title != null && title.contains(query, ignoreCase = true)) {
+                                    val base64Img = child.child("eventImg").getValue(String::class.java)
+                                    val imgUri = if (!base64Img.isNullOrEmpty()) base64ToImageUri(base64Img) else null
+
+                                    val item = SearchItemImpl(
+                                        name = title,
+                                        title = title,
+                                        date = child.child("eventDate").getValue(String::class.java),
+                                        location = child.child("eventLocation").getValue(String::class.java),
+                                        imageUrl = imgUri,
+                                        id = child.key,
+                                        type = "Event"
+                                    )
+                                    resultList.add(item)
+                                }
+                            }
+
+                            "sponsors", "tenants" -> {
+                                val name = child.child("name").getValue(String::class.java)
+                                if (name != null && name.contains(query, ignoreCase = true)) {
+                                    val logo = child.child("logo").getValue(String::class.java)
+                                    val item = SearchItemImpl(
+                                        name = name,
+                                        logo = logo,
+                                        imageUrl = logo, // logo dalam bentuk Base64 juga bisa di-decode kalau perlu
+                                        id = child.key,
+                                        type = if (path == "sponsors") "Sponsor" else "Tenant"
+                                    )
+                                    resultList.add(item)
+                                }
+                            }
+                        }
                     }
-                    onComplete()
+
+                    remaining--
+                    if (remaining == 0) {
+                        adapter.submitList(resultList)
+                    }
                 }
 
-                override fun onFailure(call: Call<List<T>>, t: Throwable) {
-                    t.printStackTrace()
-                    onComplete()
+                override fun onCancelled(error: DatabaseError) {
+                    remaining--
+                    if (remaining == 0) {
+                        adapter.submitList(resultList)
+                    }
                 }
             })
         }
+    }
 
-        val calls = mutableListOf<Call<out List<out SearchItem>>>()
+    private fun base64ToImageUri(base64: String): String? {
+        return try {
+            val bytes = android.util.Base64.decode(base64, android.util.Base64.DEFAULT)
+            val bitmap = android.graphics.BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
 
-        if (selectedCategory.contains("All")) {
-            calls.add(service.getEvents())
-            calls.add(service.getSponsors())
-            calls.add(service.getTenants())
-        } else {
-            if (selectedCategory.contains("Event")) calls.add(service.getEvents())
-            if (selectedCategory.contains("Sponsor")) calls.add(service.getSponsors())
-            if (selectedCategory.contains("Tenant")) calls.add(service.getTenants())
-        }
+            val filename = "temp_${System.currentTimeMillis()}.png"
+            val file = File(requireContext().cacheDir, filename)
+            val outputStream = FileOutputStream(file)
+            bitmap.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, outputStream)
+            outputStream.flush()
+            outputStream.close()
 
-        var remaining = calls.size
-        if (remaining == 0) return
-
-        calls.forEach { call ->
-            @Suppress("UNCHECKED_CAST")
-            fetchAndFilter(call as Call<List<SearchItem>>) {
-                remaining--
-                if (remaining == 0) {
-                    adapter.submitList(allList)
-                }
-            }
+            Uri.fromFile(file).toString()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
         }
     }
 }
