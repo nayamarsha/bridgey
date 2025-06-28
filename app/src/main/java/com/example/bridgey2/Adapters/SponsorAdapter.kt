@@ -8,9 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.bridgey2.Models.ResponseSponsor
+import com.example.bridgey2.Models.Sponsor
 import com.example.bridgey2.R
 
-class SponsorAdapter(private val sponsors: List<ResponseSponsor>) :
+class SponsorAdapter(private val sponsors: ArrayList<Sponsor>) :
     RecyclerView.Adapter<SponsorAdapter.SponsorViewHolder>() {
 
     class SponsorViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -27,7 +28,7 @@ class SponsorAdapter(private val sponsors: List<ResponseSponsor>) :
     override fun onBindViewHolder(holder: SponsorViewHolder, position: Int) {
         val sponsor = sponsors[position]
         holder.nameSponsor.text = sponsor.name
-        holder.titleSponsor.text = sponsor.title
+//        holder.titleSponsor.text = sponsor.description
 
         Glide.with(holder.imgSponsor.context)
             .load(sponsor.logo)
