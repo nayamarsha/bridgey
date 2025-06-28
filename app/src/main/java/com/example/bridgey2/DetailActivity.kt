@@ -1,18 +1,20 @@
 package com.example.bridgey2
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
+import com.example.bridgey2.Models.Post
 import com.example.bridgey2.Models.ResponseEvent
 import com.example.bridgey2.databinding.ActivityDetailBinding
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
-    private lateinit var event: ResponseEvent
+    private lateinit var event: Post
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,21 +30,25 @@ class DetailActivity : AppCompatActivity() {
         }
 
         // Ambil data event dari intent
-        intent?.extras?.getParcelable<ResponseEvent>("EVENT_DATA")?.let {
+        intent?.extras?.getParcelable<Post>("EVENT_DATA")?.let {
             event = it
         } ?: return
-        event = intent.getParcelableExtra<ResponseEvent>("EVENT_DATA") ?: return
+        event = intent.getParcelableExtra<Post>("EVENT_DATA") ?: return
 
         // Tampilkan data ke view
         binding.apply {
-            detailName.text = event.name
-            valDesc.text = event.description
-            valDate.text = event.date
-            valLocation.text = event.location
+            detailName.text = event.eventTitle
+            valDesc.text = event.eventDesc
+            valDate.text = event.eventDate
+            valLocation.text = event.eventLocation
+            val bytes = android.util.Base64.decode(event.eventImg,
+                android.util.Base64.DEFAULT)
+            val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+            imageView.setImageBitmap(bitmap)
 
-            Glide.with(imageView.context)
-                .load(event.imageUrl)
-                .into(imageView)
+//            Glide.with(imageView.context)
+//                .load(event.imageUrl)
+//                .into(imageView)
         }
 
         binding.btnClose.setOnClickListener {
