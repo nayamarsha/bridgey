@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bridgey2.DetailActivity
 import com.example.bridgey2.Models.Post
 import com.example.bridgey2.databinding.ScheduleItemBinding
+import java.util.ArrayList
 
 class ScheduleEventAdapter(private val events: ArrayList<Post>) :
     RecyclerView.Adapter<ScheduleEventAdapter.EventViewHolder>() {

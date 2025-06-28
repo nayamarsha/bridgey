@@ -34,7 +34,7 @@ class ScheduleFragment : Fragment() {
 
         tabLayout.addTab(tabLayout.newTab().setText("Event"))
         tabLayout.addTab(tabLayout.newTab().setText("Sponsor"))
-        tabLayout.addTab(tabLayout.newTab().setText("Tent"))
+        tabLayout.addTab(tabLayout.newTab().setText("Tenant"))
 
         viewPager.adapter = adapter
 
