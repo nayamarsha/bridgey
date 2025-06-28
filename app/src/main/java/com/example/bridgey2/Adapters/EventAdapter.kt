@@ -1,5 +1,6 @@
 package com.example.bridgey2.Adapters
 
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,10 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.bridgey2.Models.ResponseEvent
+import com.example.bridgey2.Models.Post
 import com.example.bridgey2.R
 
-class EventAdapter(private val events: List<ResponseEvent>) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
+class EventAdapter(private val events: ArrayList<Post>) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
 
     class EventViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imgEvent: ImageView = view.findViewById(R.id.imgEvent)
@@ -24,10 +25,14 @@ class EventAdapter(private val events: List<ResponseEvent>) : RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         val event = events[position]
-        holder.nameEvent.text = event.name
-        Glide.with(holder.imgEvent.context)
-            .load(event.imageUrl)
-            .into(holder.imgEvent)
+        holder.nameEvent.text = event.eventTitle
+//        Glide.with(holder.imgEvent.context)
+//            .load(event.eventImg)
+//            .into(holder.imgEvent)
+        val bytes = android.util.Base64.decode(event.eventImg,
+            android.util.Base64.DEFAULT)
+        val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+        holder.imgEvent.setImageBitmap(bitmap)
     }
 
     override fun getItemCount(): Int = events.size
