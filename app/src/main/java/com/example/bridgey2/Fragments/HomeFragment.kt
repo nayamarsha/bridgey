@@ -16,6 +16,7 @@ import com.example.bridgey2.Adapters.SponsorAdapter
 import com.example.bridgey2.R
 import com.example.bridgey2.AccountActivity
 import com.example.bridgey2.Models.Post
+import com.example.bridgey2.Models.Sponsor
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -30,6 +31,7 @@ class HomeFragment : Fragment() {
     private lateinit var rvEvent: RecyclerView
     private lateinit var db: DatabaseReference
     private lateinit var eventArrayList: ArrayList<Post>
+    private lateinit var sponsorArrayList: ArrayList<Sponsor>
 
     private lateinit var rvSponsor: RecyclerView
     private lateinit var logoButton: View
@@ -47,6 +49,7 @@ class HomeFragment : Fragment() {
         rvEvent = view.findViewById(R.id.rv_event)
         rvEvent.hasFixedSize()
         eventArrayList = arrayListOf<Post>()
+        sponsorArrayList = arrayListOf<Sponsor>()
 
         rvSponsor = view.findViewById(R.id.rv_sponsor)
         logoButton = view.findViewById(R.id.logo)
@@ -102,20 +105,21 @@ class HomeFragment : Fragment() {
     }
 
     private fun fetchSponsorData() {
-        ApiConfig.getService().getSponsorsOnly().enqueue(object : Callback<List<ResponseSponsor>> {
-            override fun onResponse(call: Call<List<ResponseSponsor>>, response: Response<List<ResponseSponsor>>) {
-                if (response.isSuccessful) {
-                    response.body()?.let { sponsorList ->
-                        sponsorAdapter = SponsorAdapter(sponsorList)
-                        rvSponsor.adapter = sponsorAdapter
+        db = FirebaseDatabase.getInstance().getReference("sponsors")
+        db.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    for(eventSnapshot in snapshot.children){
+                        val sponsor = eventSnapshot.getValue(Sponsor::class.java)
+                        sponsorArrayList.add(sponsor!!)
                     }
-                } else {
-                    Toast.makeText(requireContext(), "Error: ${response.message()}", Toast.LENGTH_SHORT).show()
+                    sponsorAdapter = SponsorAdapter(sponsorArrayList)
+                    rvSponsor.adapter = sponsorAdapter
                 }
             }
 
-            override fun onFailure(call: Call<List<ResponseSponsor>>, t: Throwable) {
-                Toast.makeText(requireContext(), t.localizedMessage, Toast.LENGTH_SHORT).show()
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, "Database error: ${error.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }

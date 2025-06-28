@@ -5,12 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.bridgey2.DetailActivity
 import com.example.bridgey2.DetailSponsorActivity
-import com.example.bridgey2.Models.ResponseSponsor
+import com.example.bridgey2.Models.Sponsor
 import com.example.bridgey2.databinding.ScheduleItemBinding // Import binding class
 
-class ScheduleSponsorAdapter(private val sponsors: List<ResponseSponsor>): RecyclerView.Adapter<ScheduleSponsorAdapter.SponsorViewHolder>() {
+class ScheduleSponsorAdapter(private val sponsors: ArrayList<Sponsor>): RecyclerView.Adapter<ScheduleSponsorAdapter.SponsorViewHolder>() {
 
     inner class SponsorViewHolder(val binding: ScheduleItemBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -27,7 +26,7 @@ class ScheduleSponsorAdapter(private val sponsors: List<ResponseSponsor>): Recyc
         val sponsor = sponsors[position]
         holder.binding.apply {
             siHeader.text = sponsor.name ?: "No Header"
-            itemSceduleTitle.text = sponsor.title ?: "No title"
+//            itemSceduleTitle.text = sponsor. ?: "No title"
             itemSceduleDesc.text = sponsor.description?: "No Description"
 
             Glide.with(siImageView.context)
@@ -36,7 +35,7 @@ class ScheduleSponsorAdapter(private val sponsors: List<ResponseSponsor>): Recyc
 
             btnDetail.setOnClickListener {
                 val intent = Intent(root.context, DetailSponsorActivity::class.java)
-                intent.putExtra("SPONSOR_DATA", sponsor)
+                intent.putExtra("SPONSOR_ID", sponsor.id)
                 root.context.startActivity(intent)
             }
         }
