@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Post(
+    var id: String?=null,
     val eventTitle: String?=null,
     val eventDesc: String?=null,
     val eventDate: String?=null,

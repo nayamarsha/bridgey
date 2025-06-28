@@ -2,14 +2,11 @@ package com.example.bridgey2.Adapters
 
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.bridgey2.DetailActivity
 import com.example.bridgey2.Models.Post
-import com.example.bridgey2.Models.ResponseEvent
 import com.example.bridgey2.databinding.ScheduleItemBinding
 
 class ScheduleEventAdapter(private val events: ArrayList<Post>) :
@@ -33,19 +30,16 @@ class ScheduleEventAdapter(private val events: ArrayList<Post>) :
             itemSceduleTitle.text = event.eventTitle ?: "No Title"
             itemSceduleSubtitle.text = event.eventLocation ?: "No Location"
             itemSceduleDesc.text = event.eventDesc ?: "No Description"
-            val bytes = android.util.Base64.decode(event.eventImg,
-                android.util.Base64.DEFAULT)
+
+            // Tampilkan gambar dari base64 (langsung di list)
+            val bytes = android.util.Base64.decode(event.eventImg, android.util.Base64.DEFAULT)
             val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
             siImageView.setImageBitmap(bitmap)
 
-//            Glide.with(siImageView.context)
-//                .load(event.imageUrl)
-//                .into(siImageView)
-
-            // Tambahkan klik listener ke root view (atau tombol tertentu)
-            holder.binding.btnDetail.setOnClickListener {
+            // Saat klik tombol detail, kirim hanya ID ke DetailActivity
+            btnDetail.setOnClickListener {
                 val intent = Intent(root.context, DetailActivity::class.java)
-                intent.putExtra("EVENT_DATA", event)
+                intent.putExtra("POST_ID", event.id) // hanya ID
                 root.context.startActivity(intent)
             }
         }

@@ -8,28 +8,16 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bridgey2.Adapters.EventAdapter
 import com.example.bridgey2.Adapters.ScheduleEventAdapter
-import com.example.bridgey2.Api.ApiConfig
-import com.example.bridgey2.Api.ApiService
 import com.example.bridgey2.Models.Post
-import com.example.bridgey2.Models.ResponseEvent
 import com.example.bridgey2.R
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.google.firebase.database.*
 
 class EventFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var eventAdapter: ScheduleEventAdapter
     private lateinit var db: DatabaseReference
     private lateinit var eventArrayList: ArrayList<Post>
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_event, container, false)
@@ -40,41 +28,31 @@ class EventFragment : Fragment() {
 
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.hasFixedSize()
-        eventArrayList = arrayListOf<Post>()
+        recyclerView.setHasFixedSize(true)
+
+        eventArrayList = arrayListOf()
+        eventAdapter = ScheduleEventAdapter(eventArrayList)
+        recyclerView.adapter = eventAdapter
 
         fetchEvents()
     }
 
-//    private fun fetchEvents() {
-//        ApiConfig.getService().getProducts().enqueue(object : Callback<List<ResponseEvent>> {
-//            override fun onResponse(call: Call<List<ResponseEvent>>, response: Response<List<ResponseEvent>>) {
-//                if (response.isSuccessful) {
-//                    response.body()?.let { products ->
-//                        eventAdapter = ScheduleEventAdapter(products)
-//                        recyclerView.adapter = eventAdapter
-//                    }
-//                } else {
-//                    Toast.makeText(context, "Failed to fetch events", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<List<ResponseEvent>>, t: Throwable) {
-//                Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
-//            }
-//        })
-//    }
     private fun fetchEvents() {
         db = FirebaseDatabase.getInstance().getReference("events")
-        db.addValueEventListener(object : ValueEventListener{
+        db.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.exists()){
-                    for(eventSnapshot in snapshot.children){
+                eventArrayList.clear() // clear biar data ga dobel saat refresh
+
+                if (snapshot.exists()) {
+                    for (eventSnapshot in snapshot.children) {
                         val event = eventSnapshot.getValue(Post::class.java)
-                        eventArrayList.add(event!!)
+                        event?.id = eventSnapshot.key // ⬅️ ini penting!
+
+                        if (event != null) {
+                            eventArrayList.add(event)
+                        }
                     }
-                    eventAdapter = ScheduleEventAdapter(eventArrayList)
-                    recyclerView.adapter = eventAdapter
+                    eventAdapter.notifyDataSetChanged()
                 }
             }
 
