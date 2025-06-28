@@ -45,5 +45,7 @@ class ScheduleEventAdapter(private val events: ArrayList<Post>) :
         }
     }
 
+
+
     override fun getItemCount(): Int = events.size
 }
