@@ -50,7 +50,9 @@ class SponsorFragment : Fragment() {
                 if (snapshot.exists()) {
                     for (dataSnap in snapshot.children) {
                         val sponsor = dataSnap.getValue(Sponsor::class.java)
-                        sponsor?.let { sponsorList.add(it) }
+                        sponsor?.let {
+                            it.id = dataSnap.key
+                            sponsorList.add(it) }
                     }
                     sponsorAdapter.notifyDataSetChanged()
                 }
