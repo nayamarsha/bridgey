@@ -15,8 +15,10 @@ import com.example.bridgey2.Adapters.EventAdapter
 import com.example.bridgey2.Adapters.SponsorAdapter
 import com.example.bridgey2.R
 import com.example.bridgey2.AccountActivity
+import com.example.bridgey2.Adapters.TenantAdapter
 import com.example.bridgey2.Models.Post
 import com.example.bridgey2.Models.Sponsor
+import com.example.bridgey2.Models.Tenant
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -28,16 +30,20 @@ import retrofit2.Response
 
 class HomeFragment : Fragment() {
 
-    private lateinit var rvEvent: RecyclerView
     private lateinit var db: DatabaseReference
     private lateinit var eventArrayList: ArrayList<Post>
     private lateinit var sponsorArrayList: ArrayList<Sponsor>
+    private lateinit var tenantArrayList: ArrayList<Tenant>
 
+    private lateinit var rvEvent: RecyclerView
     private lateinit var rvSponsor: RecyclerView
+    private lateinit var rvTenant: RecyclerView
+
     private lateinit var logoButton: View
 
     private lateinit var eventAdapter: EventAdapter
     private lateinit var sponsorAdapter: SponsorAdapter
+    private lateinit var tenantAdapter: TenantAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
@@ -46,19 +52,26 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        rvEvent = view.findViewById(R.id.rv_event)
-        rvEvent.hasFixedSize()
         eventArrayList = arrayListOf<Post>()
         sponsorArrayList = arrayListOf<Sponsor>()
+        tenantArrayList = arrayListOf<Tenant>()
 
+        rvEvent = view.findViewById(R.id.rv_event)
+        rvEvent.hasFixedSize()
         rvSponsor = view.findViewById(R.id.rv_sponsor)
+        rvSponsor.hasFixedSize()
+        rvTenant = view.findViewById(R.id.rv_tenant)
+        rvTenant.hasFixedSize()
+
         logoButton = view.findViewById(R.id.logo)
 
         rvEvent.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         rvSponsor.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        rvTenant.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         fetchEventData()
         fetchSponsorData()
+        fetchTenantData()
 
         logoButton.setOnClickListener {
             val intent = Intent(requireContext(), AccountActivity::class.java)
@@ -115,6 +128,26 @@ class HomeFragment : Fragment() {
                     }
                     sponsorAdapter = SponsorAdapter(sponsorArrayList)
                     rvSponsor.adapter = sponsorAdapter
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, "Database error: ${error.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun fetchTenantData() {
+        db = FirebaseDatabase.getInstance().getReference("tenants")
+        db.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    for(tenantSnapshot in snapshot.children){
+                        val tenant = tenantSnapshot.getValue(Tenant::class.java)
+                        tenantArrayList.add(tenant!!)
+                    }
+                    tenantAdapter = TenantAdapter(tenantArrayList)
+                    rvTenant.adapter = tenantAdapter
                 }
             }
 
