@@ -1,5 +1,6 @@
 package com.example.bridgey2.Adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +8,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.bridgey2.DetailActivity
+import com.example.bridgey2.DetailSponsorActivity
+import com.example.bridgey2.DetailTenantActvity
 import com.example.bridgey2.R
 import com.example.bridgey2.Models.SearchItem
 
@@ -46,7 +50,7 @@ class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
             TYPE_TENANT -> {
                 val view = LayoutInflater.from(parent.context).inflate(R.layout.item_search_tenant, parent, false)
-                SponsorViewHolder(view)
+                TenantViewHolder(view)
             }
             else -> {
                 val view = LayoutInflater.from(parent.context).inflate(R.layout.item_search_event, parent, false)
@@ -62,6 +66,7 @@ class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         when (holder) {
             is EventViewHolder -> {
+                val item = items[position]
                 holder.title.text = item.name
                 holder.date.text = item.date
                 holder.location.text = item.location
@@ -70,20 +75,45 @@ class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     .load(item.imageUrl)
                     .placeholder(R.drawable.temp_poster)
                     .into(holder.image)
+
+                holder.itemView.setOnClickListener {
+                    val context = holder.itemView.context
+                    val intent = Intent(context, DetailActivity::class.java)
+                    intent.putExtra("POST_ID", item.id)
+                    context.startActivity(intent)
+                }
             }
+
             is SponsorViewHolder -> {
+                val item = items[position]
+                holder.title.text = item.name
+
+                Glide.with(holder.itemView.context)
+                    .load(item.logo)
+                    .placeholder(R.drawable.temp_poster)
+                    .into(holder.logo)
+
+                holder.itemView.setOnClickListener {
+                    val context = holder.itemView.context
+                    val intent = Intent(context, DetailSponsorActivity::class.java)
+                    intent.putExtra("SPONSOR_ID", item.id)
+                    context.startActivity(intent)
+                }
+            }
+
+            is TenantViewHolder -> {
                 holder.title.text = item.name
                 Glide.with(holder.itemView.context)
                     .load(item.logo)
                     .placeholder(R.drawable.temp_poster)
                     .into(holder.logo)
-            }
-            is SponsorViewHolder -> {
-                holder.title.text = item.name
-                Glide.with(holder.itemView.context)
-                    .load(item.logo)
-                    .placeholder(R.drawable.temp_poster)
-                    .into(holder.logo)
+
+                holder.itemView.setOnClickListener {
+                    val context = holder.itemView.context
+                    val intent = Intent(context, DetailTenantActvity::class.java)
+                    intent.putExtra("TENANT_ID", item.id)
+                    context.startActivity(intent)
+                }
             }
         }
     }
@@ -96,6 +126,11 @@ class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     inner class SponsorViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val title: TextView = view.findViewById(R.id.itemTitle)
+        val logo: ImageView = view.findViewById(R.id.photos)
+    }
+
+    inner class TenantViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val title: TextView = view.findViewById(R.id.itemTitle)
         val logo: ImageView = view.findViewById(R.id.photos)
     }

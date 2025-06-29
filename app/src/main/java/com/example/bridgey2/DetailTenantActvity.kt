@@ -56,11 +56,11 @@ class DetailTenantActvity : AppCompatActivity() {
 
 
             } else {
-                Toast.makeText(this, "Sponsor tidak ditemukan", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Tenant tidak ditemukan", Toast.LENGTH_SHORT).show()
                 finish()
             }
         }.addOnFailureListener {
-            Toast.makeText(this, "Gagal mengambil data sponsor", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Gagal mengambil data tenant", Toast.LENGTH_SHORT).show()
             finish()
         }
 

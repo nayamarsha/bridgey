@@ -104,7 +104,10 @@ class HomeFragment : Fragment() {
                 if(snapshot.exists()){
                     for(eventSnapshot in snapshot.children){
                         val event = eventSnapshot.getValue(Post::class.java)
-                        eventArrayList.add(event!!)
+                        if (event != null) {
+                            event.id = eventSnapshot.key  // ✅ Simpan unique key ke field id
+                            eventArrayList.add(event)
+                        }
                     }
                     eventAdapter = EventAdapter(eventArrayList)
                     rvEvent.adapter = eventAdapter
@@ -124,7 +127,10 @@ class HomeFragment : Fragment() {
                 if(snapshot.exists()){
                     for(eventSnapshot in snapshot.children){
                         val sponsor = eventSnapshot.getValue(Sponsor::class.java)
-                        sponsorArrayList.add(sponsor!!)
+                        if (sponsor != null) {
+                            sponsor.id = eventSnapshot.key  // ✅ Simpan unique key ke field id
+                            sponsorArrayList.add(sponsor)
+                        }
                     }
                     sponsorAdapter = SponsorAdapter(sponsorArrayList)
                     rvSponsor.adapter = sponsorAdapter
@@ -144,7 +150,10 @@ class HomeFragment : Fragment() {
                 if(snapshot.exists()){
                     for(tenantSnapshot in snapshot.children){
                         val tenant = tenantSnapshot.getValue(Tenant::class.java)
-                        tenantArrayList.add(tenant!!)
+                        if (tenant != null) {
+                            tenant.id = tenantSnapshot.key  // ✅ Simpan unique key ke field id
+                            tenantArrayList.add(tenant)
+                        }
                     }
                     tenantAdapter = TenantAdapter(tenantArrayList)
                     rvTenant.adapter = tenantAdapter

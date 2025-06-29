@@ -1,5 +1,6 @@
 package com.example.bridgey2.Adapters
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.bridgey2.DetailActivity
 import com.example.bridgey2.Models.Post
 import com.example.bridgey2.R
 
@@ -33,6 +35,12 @@ class EventAdapter(private val events: ArrayList<Post>) : RecyclerView.Adapter<E
             android.util.Base64.DEFAULT)
         val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
         holder.imgEvent.setImageBitmap(bitmap)
+        holder.itemView.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, DetailActivity::class.java)
+            intent.putExtra("POST_ID", event.id)
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int = events.size
