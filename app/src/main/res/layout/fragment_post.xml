@@ -20,16 +20,6 @@
             android:textStyle="bold"
             android:textColor="#FFFFFF"
             android:layout_centerInParent="true"/>
-
-        <TextView
-            android:id="@+id/headerCancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Next"
-            android:textColor="#B6AFAF"
-            android:textSize="16sp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"/>
     </RelativeLayout>
 
     <ScrollView

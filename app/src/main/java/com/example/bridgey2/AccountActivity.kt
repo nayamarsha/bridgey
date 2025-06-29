@@ -65,7 +65,7 @@ class AccountActivity : AppCompatActivity() {
     }
 
     private fun updateProfile(intent: Intent) {
-        tvName.text = intent.getStringExtra("name") ?: "Budiono Siregar"
+        tvName.text = intent.getStringExtra("name") ?: "Bridgey IF C Kelompok 5"
         tvRole.text = intent.getStringExtra("role") ?: "Event Organizer"
         tvPhone.text = intent.getStringExtra("phone") ?: "+6285819040610"
     }
@@ -77,9 +77,7 @@ class AccountActivity : AppCompatActivity() {
 
     private fun getFeeds(): List<FeedItem> {
         return listOf(
-            FeedItem("https://picsum.photos/600/300?random=1"),
-            FeedItem("https://picsum.photos/600/300?random=2"),
-            FeedItem("https://picsum.photos/600/300?random=3")
+            FeedItem("https://venngage-wordpress.s3.amazonaws.com/uploads/2023/06/pink-and-blue-recycle-event-volunteer-poster-791x1024.png")
         )
     }
 }

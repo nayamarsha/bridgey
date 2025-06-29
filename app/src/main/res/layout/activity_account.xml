@@ -84,7 +84,7 @@
                 android:id="@+id/tvLink"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="linktr.ee/BudionoSiregar"
+                android:text="linktr.ee/Bridgey"
                 android:textColor="#0080FF"
                 android:textSize="14sp" />
         </LinearLayout>
