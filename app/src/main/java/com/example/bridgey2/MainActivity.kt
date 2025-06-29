@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 //import com.example.bridgey2.Fragments.ScheduleFragment
@@ -34,7 +35,45 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        NavigationUI.setupWithNavController(binding.bottomNavigation, navController)
+        val bottomNav = binding.bottomNavigation
+
+        NavigationUI.setupWithNavController(bottomNav, navController)
+
+
+        bottomNav.setOnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.homeFragment -> {
+                    navController.navigate(R.id.homeFragment)
+                    true
+                }
+                R.id.searchFragment -> {
+                    navController.navigate(R.id.searchFragment)
+                    true
+                }
+                R.id.postFragment -> {
+                    navController.navigate(R.id.postFragment)
+                    true
+                }
+                R.id.scheduleFragment -> {
+                    navController.navigate(R.id.scheduleFragment)
+                    true
+                }
+                R.id.statusFragment -> {
+                    // Force kembali ke StatusFragment dari manapun
+                    navController.navigate(
+                        R.id.statusFragment,
+                        null,
+                        NavOptions.Builder()
+                            .setPopUpTo(R.id.statusFragment, true)
+                            .setLaunchSingleTop(true)
+                            .build()
+                    )
+                    true
+                }
+                else -> false
+            }
+        }
+
 
     }
 }
